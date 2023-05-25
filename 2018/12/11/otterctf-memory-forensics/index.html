@@ -1,0 +1,1539 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="otterctf_memory_forensics, algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>otterctf_memory_forensics | xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/my.css">
+
+    <script src="../../../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="../../../../libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '../../../../index.html';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('../../../../medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">otterctf_memory_forensics</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="../../../../libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="../../../../tags/Forensics/">
+                                <span class="chip bg-color">Forensics</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="../../../../categories/writeup/" class="post-category">
+                                writeup
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-12-11
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-05-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    38 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="1-What-the-password-100"><a href="#1-What-the-password-100" class="headerlink" title="1. What the password? 100"></a>1. What the password? 100</h1><h2 id="question"><a href="#question" class="headerlink" title="question"></a>question</h2><p>you got a sample of rick’s PC’s memory. can you get his user password? format: CTF{…}</p>
+<p>Alternative download link: <a target="_blank" rel="noopener" href="https://mega.nz/#!sh8wmCIL!b4tpech4wzc3QQ6YgQ2uZnOmctRZ2duQxDqxbkWYipQ">https://mega.nz/#!sh8wmCIL!b4tpech4wzc3QQ6YgQ2uZnOmctRZ2duQxDqxbkWYipQ</a></p>
+<h2 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h2><p>看到Memory_Forensics，无脑上volatility<br>先在国外服务器起docker-kali，发现没有volatility</p>
+<span id="more"></span>
+<pre><code class="bash">apt-get update&amp;&amp; apt-get install volatility -y
+</code></pre>
+<p>首先看imageinfo</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 imageinfo                                                
+Volatility Foundation Volatility Framework 2.6
+INFO    : volatility.debug    : Determining profile based on KDBG search...
+          Suggested Profile(s) : Win7SP1x64, Win7SP0x64, Win2008R2SP0x64, Win2008R2SP1x64_23418, Win2008R2SP1x64, Win7SP1x64_23418
+                     AS Layer1 : WindowsAMD64PagedMemory (Kernel AS)
+                     AS Layer2 : FileAddressSpace (/root/Desktop/OtterCTF.vmem)
+                      PAE type : No PAE
+                           DTB : 0x187000L
+                          KDBG : 0xf80002c430a0L
+          Number of Processors : 2
+     Image Type (Service Pack) : 1
+                KPCR for CPU 0 : 0xfffff80002c44d00L
+                KPCR for CPU 1 : 0xfffff880009ef000L
+             KUSER_SHARED_DATA : 0xfffff78000000000L
+           Image date and time : 2018-08-04 19:34:22 UTC+0000
+     Image local date and time : 2018-08-04 22:34:22 +0300
+</code></pre>
+<p>由于要密码，很简单，直接dumphash</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 hashdump                                                         
+Volatility Foundation Volatility Framework 2.6
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Rick:1000:aad3b435b51404eeaad3b435b51404ee:518172d012f97d3a8fcc089615283940:::
+</code></pre>
+<p>拿<code>518172d012f97d3a8fcc089615283940</code>去解hash发现不对，hash解出来是空密码，flag不对。大佬说是两段hash，后面的没出来，就用python源码的Volatility+mimikatz吧</p>
+<pre><code class="zsh">wget http://downloads.volatilityfoundation.org/releases/2.6/volatility-2.6.zip
+unzip volatility-2.6.zip
+wget https://github.com/volatilityfoundation/community/raw/master/FrancescoPicasso/mimikatz.py
+cp mimikatz.py ./volatility-master/volatility/plugins/
+➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 mimikatz 
+Volatility Foundation Volatility Framework 2.6
+*** Failed to import volatility.plugins.mimikatz (AttributeError: &#39;module&#39; object has no attribute &#39;ULInt32&#39;)
+ERROR   : volatility.debug    : You must specify something to do (try -h)
+</code></pre>
+<p>发现有错误，单独跑下mimakatz</p>
+<pre><code class="zsh">➜  volatility-master python ./plugin/mimikatz.pyc 
+Traceback (most recent call last):
+  File &quot;/root/Desktop/volatility-master/plugin/mimikatz.py&quot;, line 171, in &lt;module&gt;
+  File &quot;/root/Desktop/volatility-master/plugin/mimikatz.py&quot;, line 182, in LsaDecryptor
+AttributeError: &#39;module&#39; object has no attribute &#39;ULInt32&#39;
+</code></pre>
+<p>mimikatz的锅，找到方法</p>
+<pre><code class="bash">sudo pip uninstall construct
+sudo pip install construct==2.5.5-reupload
+</code></pre>
+<p>走起</p>
+<pre><code class="bash">➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 mimikatz
+Volatility Foundation Volatility Framework 2.6
+Module   User             Domain           Password                                
+-------- ---------------- ---------------- ----------------------------------------
+wdigest  Rick             WIN-LO6FAF3DTFE  MortyIsReallyAnOtter                    
+wdigest  WIN-LO6FAF3DTFE$ WORKGROUP                                                
+</code></pre>
+<h2 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h2><pre><code>第一关flag：CTF&#123;MortyIsReallyAnOtter&#125;
+</code></pre>
+<h1 id="2-General-Info-75"><a href="#2-General-Info-75" class="headerlink" title="2 - General Info 75"></a>2 - General Info 75</h1><p>##question<br>Let’s start easy - whats the PC’s name and IP address?<br>format: CTF{flag}</p>
+<p>##solve<br>要ip地址，netscan走一波吧</p>
+<pre><code class="bash">➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 netscan 
+Volatility Foundation Volatility Framework 2.6
+Offset(P)          Proto    Local Address                  Foreign Address      State            Pid      Owner          Created
+0x7d60f010         UDPv4    0.0.0.0:1900                   *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:17 UTC+0000
+0x7d62b3f0         UDPv4    192.168.202.131:6771           *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:22 UTC+0000
+0x7d62f4c0         UDPv4    127.0.0.1:62307                *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:17 UTC+0000
+0x7d62f920         UDPv4    192.168.202.131:62306          *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:17 UTC+0000
+</code></pre>
+<p>主机名，先看注册表</p>
+<pre><code>➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 hivelist
+Volatility Foundation Volatility Framework 2.6
+Virtual            Physical           Name
+------------------ ------------------ ----
+0xfffff8a00377d2d0 0x00000000624162d0 \??\C:\System Volume Information\Syscache.hve
+0xfffff8a00000f010 0x000000002d4c1010 [no name]
+0xfffff8a000024010 0x000000002d50c010 \REGISTRY\MACHINE\SYSTEM
+0xfffff8a000053320 0x000000002d5bb320 \REGISTRY\MACHINE\HARDWARE
+0xfffff8a000109410 0x0000000029cb4410 \SystemRoot\System32\Config\SECURITY
+0xfffff8a00033d410 0x000000002a958410 \Device\HarddiskVolume1\Boot\BCD
+0xfffff8a0005d5010 0x000000002a983010 \SystemRoot\System32\Config\SOFTWARE
+0xfffff8a001495010 0x0000000024912010 \SystemRoot\System32\Config\DEFAULT
+0xfffff8a0016d4010 0x00000000214e1010 \SystemRoot\System32\Config\SAM
+0xfffff8a00175b010 0x00000000211eb010 \??\C:\Windows\ServiceProfiles\NetworkService\NTUSER.DAT
+0xfffff8a00176e410 0x00000000206db410 \??\C:\Windows\ServiceProfiles\LocalService\NTUSER.DAT
+0xfffff8a002090010 0x000000000b92b010 \??\C:\Users\Rick\ntuser.dat
+0xfffff8a0020ad410 0x000000000db41410 \??\C:\Users\Rick\AppData\Local\Microsoft\Windows\UsrClass.dat
+</code></pre>
+<p>看到system。。。不用想了，接着干</p>
+<pre><code class="bash">➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 -o 0xfffff8a000024010 printkey
+Volatility Foundation Volatility Framework 2.6
+Legend: (S) = Stable   (V) = Volatile
+
+----------------------------
+Registry: \REGISTRY\MACHINE\SYSTEM
+Key name: CMI-CreateHive&#123;2A7FB991-7BBE-4F9D-B91E-7CB51D4737F5&#125; (S)
+Last updated: 2018-08-04 19:25:54 UTC+0000
+
+Subkeys:
+  (S) ControlSet001
+  (S) ControlSet002
+  (S) MountedDevices
+  (S) RNG
+  (S) Select
+  (S) Setup
+  (S) Software
+  (S) WPA
+  (V) CurrentControlSet
+
+Values:
+</code></pre>
+<pre><code class="bash">➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 -o 0xfffff8a000024010 printkey -K &quot;ControlSet001&quot;
+Volatility Foundation Volatility Framework 2.6
+Legend: (S) = Stable   (V) = Volatile
+
+----------------------------
+Registry: \REGISTRY\MACHINE\SYSTEM
+Key name: ControlSet001 (S)
+Last updated: 2018-06-02 19:23:00 UTC+0000
+
+Subkeys:
+  (S) Control
+  (S) Enum
+  (S) Hardware Profiles
+  (S) Policies
+  (S) services
+
+Values:
+</code></pre>
+<p>就这样一个一个解析注册表,到最后</p>
+<pre><code class="bash">➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 -o 0xfffff8a000024010 printkey -K &quot;ControlSet001\Control\ComputerName\ComputerName&quot;
+Volatility Foundation Volatility Framework 2.6
+Legend: (S) = Stable   (V) = Volatile
+
+----------------------------
+Registry: \REGISTRY\MACHINE\SYSTEM
+Key name: ComputerName (S)
+Last updated: 2018-06-02 19:23:00 UTC+0000
+
+Subkeys:
+
+Values:
+REG_SZ                        : (S) mnmsrvc
+REG_SZ        ComputerName    : (S) WIN-LO6FAF3DTFE
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;WIN-LO6FAF3DTFE&#125;
+CTF&#123;192.168.202.131&#125;
+</code></pre>
+<h1 id="3-Play-Time-50"><a href="#3-Play-Time-50" class="headerlink" title="3 - Play Time 50"></a>3 - Play Time 50</h1><p>##question<br>Rick just loves to play some good old videogames. can you tell which game is he playing? whats the IP address of the server?</p>
+<p>format: CTF{flag}</p>
+<p>##solve<br>netscan 中发现有个进程不认识，google下LunarMS，是个游戏，over</p>
+<pre><code class="bash">➜  volatility-master python vol.py  -f ../OtterCTF.vmem --profile=Win7SP1x64 netscan                                        
+Volatility Foundation Volatility Framework 2.6
+Offset(P)          Proto    Local Address                  Foreign Address      State            Pid      Owner          Created
+0x7d60f010         UDPv4    0.0.0.0:1900                   *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:17 UTC+0000
+0x7d62b3f0         UDPv4    192.168.202.131:6771           *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:22 UTC+0000
+0x7d62f4c0         UDPv4    127.0.0.1:62307                *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:17 UTC+0000
+0x7d62f920         UDPv4    192.168.202.131:62306          *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:17 UTC+0000
+0x7d6424c0         UDPv4    0.0.0.0:50762                  *:*                                   4076     chrome.exe     2018-08-04 19:33:37 UTC+0000
+0x7d6b4250         UDPv6    ::1:1900                       *:*                                   164      svchost.exe    2018-08-04 19:28:42 UTC+0000
+0x7d6e3230         UDPv4    127.0.0.1:6771                 *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:22 UTC+0000
+0x7d6ed650         UDPv4    0.0.0.0:5355                   *:*                                   620      svchost.exe    2018-08-04 19:34:22 UTC+0000
+0x7d71c8a0         UDPv4    0.0.0.0:0                      *:*                                   868      svchost.exe    2018-08-04 19:34:22 UTC+0000
+0x7d71c8a0         UDPv6    :::0                           *:*                                   868      svchost.exe    2018-08-04 19:34:22 UTC+0000
+0x7d74a390         UDPv4    127.0.0.1:52847                *:*                                   2624     bittorrentie.e 2018-08-04 19:27:24 UTC+0000
+0x7d7602c0         UDPv4    127.0.0.1:52846                *:*                                   2308     bittorrentie.e 2018-08-04 19:27:24 UTC+0000
+0x7d787010         UDPv4    0.0.0.0:65452                  *:*                                   4076     chrome.exe     2018-08-04 19:33:42 UTC+0000
+0x7d789b50         UDPv4    0.0.0.0:50523                  *:*                                   620      svchost.exe    2018-08-04 19:34:22 UTC+0000
+0x7d789b50         UDPv6    :::50523                       *:*                                   620      svchost.exe    2018-08-04 19:34:22 UTC+0000
+0x7d92a230         UDPv4    0.0.0.0:0                      *:*                                   868      svchost.exe    2018-08-04 19:34:22 UTC+0000
+0x7d92a230         UDPv6    :::0                           *:*                                   868      svchost.exe    2018-08-04 19:34:22 UTC+0000
+0x7d9e8b50         UDPv4    0.0.0.0:20830                  *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:15 UTC+0000
+0x7d9f4560         UDPv4    0.0.0.0:0                      *:*                                   3856     WebCompanion.e 2018-08-04 19:34:22 UTC+0000
+0x7d9f8cb0         UDPv4    0.0.0.0:20830                  *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:15 UTC+0000
+0x7d9f8cb0         UDPv6    :::20830                       *:*                                   2836     BitTorrent.exe 2018-08-04 19:27:15 UTC+0000
+0x7d8bb390         TCPv4    0.0.0.0:9008                   0.0.0.0:0            LISTENING        4        System         
+0x7d8bb390         TCPv6    :::9008                        :::0                 LISTENING        4        System         
+0x7d9a9240         TCPv4    0.0.0.0:8733                   0.0.0.0:0            LISTENING        4        System         
+0x7d9a9240         TCPv6    :::8733                        :::0                 LISTENING        4        System         
+0x7d9e19e0         TCPv4    0.0.0.0:20830                  0.0.0.0:0            LISTENING        2836     BitTorrent.exe 
+0x7d9e19e0         TCPv6    :::20830                       :::0                 LISTENING        2836     BitTorrent.exe 
+0x7d9e1c90         TCPv4    0.0.0.0:20830                  0.0.0.0:0            LISTENING        2836     BitTorrent.exe 
+0x7d42ba90         TCPv4    -:0                            56.219.196.26:0      CLOSED           2836     BitTorrent.exe 
+0x7d6124d0         TCPv4    192.168.202.131:49530          77.102.199.102:7575  CLOSED           708      LunarMS.exe    
+0x7d62d690         TCPv4    192.168.202.131:49229          169.1.143.215:8999   CLOSED           2836     BitTorrent.exe 
+0x7d634350         TCPv6    -:0                            38db:c41a:80fa:ffff:38db:c41a:80fa:ffff:0 CLOSED           2836     BitTorrent.exe   
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;LunarMS&#125;
+CTF&#123;77.102.199.102&#125;
+</code></pre>
+<h1 id="4-Name-Game-100"><a href="#4-Name-Game-100" class="headerlink" title="4 - Name Game 100"></a>4 - Name Game 100</h1><p>##question<br>We know that the account was logged in to a channel called Lunar-3. what is the account name?</p>
+<p>format: CTF{flag}</p>
+<p>##solve<br>如果他登陆了，必定存入了Lunar到vmem中，尝试找找Lunar-3 </p>
+<pre><code class="bash">➜  Desktop strings OtterCTF.vmem|grep Lunar-3          
+Lunar-3
+Lunar-3
+</code></pre>
+<p>显示找到的前三行后三行</p>
+<pre><code class="bash">➜  Desktop strings OtterCTF.vmem|grep Lunar-3 -A 3 -B 3
+disabled
+mouseOver
+keyFocused
+Lunar-3
+0tt3r8r33z3
+Sound/UI.img/
+BtMouseClick
+--
+c+Yt
+tb+Y4c+Y
+b+YLc+Y
+Lunar-3
+Lunar-4
+L(dNVxdNV
+L|eNV
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;0tt3r8r33z3&#125;
+</code></pre>
+<h1 id="5-Name-Game-2-150"><a href="#5-Name-Game-2-150" class="headerlink" title="5 - Name Game 2 150"></a>5 - Name Game 2 150</h1><p>##question<br>From a little research we found that the username of the logged on character is always after this signature: 0x64 0x??{6-8} 0x40 0x06 0x??{18} 0x5a 0x0c 0x00{2} What’s rick’s character’s name? format: CTF{…}</p>
+<p>##solve<br>先看下进程</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 psscan  
+Volatility Foundation Volatility Framework 2.6
+Offset(P)          Name                PID   PPID PDB                Time created                   Time exited                   
+------------------ ---------------- ------ ------ ------------------ ------------------------------ ------------------------------
+0x000000007d403610 mscorsvw.exe        412    492 0x0000000040d28000 2018-08-04 19:28:42 UTC+0000                                 
+0x000000007d686b30 Rick And Morty     3820   2728 0x000000000b59a000 2018-08-04 19:32:55 UTC+0000                                 
+0x000000007d6a7b30 bittorrentie.e     2308   2836 0x0000000076ada000 2018-08-04 19:27:19 UTC+0000                                 
+0x000000007d6c9b30 bittorrentie.e     2624   2836 0x00000000761f5000 2018-08-04 19:27:21 UTC+0000                                 
+0x000000007d7cb740 LunarMS.exe         708   2728 0x00000000731cb000 2018-08-04 19:27:39 UTC+0000                                 
+0x000000007d832060 sppsvc.exe         2500    492 0x000000000ae7b000 2018-08-04 19:26:58 UTC+0000                                 
+0x000000007d87e060 explorer.exe       2728   2696 0x000000000873f000 2018-08-04 19:27:04 UTC+0000                                 
+0x000000007d890b30 BitTorrent.exe     2836   2728 0x0000000006c2e000 2018-08-04 19:27:07 UTC+0000                                 
+0x000000007d8f02e0 WebCompanion.e     2844   2728 0x0000000006619000 2018-08-04 19:27:07 UTC+0000   2018-08-04 19:33:33 UTC+0000  
+0x000000007d9aab30 SearchIndexer.     3064    492 0x0000000079a02000 2018-08-04 19:27:14 UTC+0000                                 
+0x000000007da8f060 sc.exe             3208   3880 0x000000006fe9a000 2018-08-04 19:33:47 UTC+0000   2018-08-04 19:33:48 UTC+0000  
+0x000000007db12060 WmiPrvSE.exe       2136    604 0x0000000073b40000 2018-08-04 19:26:51 UTC+0000                                 
+0x000000007db8f060 WebCompanionIn     3880   1484 0x0000000043242000 2018-08-04 19:33:07 UTC+0000                                 
+0x000000007dbcdb30 vmtoolsd.exe       2804   2728 0x00000000074c6000 2018-08-04 19:27:06 UTC+0000                                 
+0x000000007dbe9b30 taskhost.exe       2344    492 0x000000000b824000 2018-08-04 19:26:57 UTC+0000                                 
+0x000000007dbfab30 dwm.exe            2704    844 0x0000000008a6d000 2018-08-04 19:27:04 UTC+0000                                 
+0x000000007dbfd960 notepad.exe        3304   3132 0x000000007207d000 2018-08-04 19:34:10 UTC+0000                                 
+0x000000007dc0f630 VGAuthService.     1356    492 0x0000000018f8b000 2018-08-04 19:26:25 UTC+0000                                 
+0x000000007dc7f630 dllhost.exe        1324    492 0x000000001030d000 2018-08-04 19:26:42 UTC+0000                                 
+0x000000007dc92920 vmtoolsd.exe       1428    492 0x0000000017f54000 2018-08-04 19:26:27 UTC+0000                                 
+0x000000007dcb6890 sc.exe              452   3880 0x000000005f76a000 2018-08-04 19:33:48 UTC+0000   2018-08-04 19:33:48 UTC+0000  
+0x000000007dce7b30 SearchFilterHo     2740   3064 0x000000002fa16000 2018-08-04 19:33:11 UTC+0000   2018-08-04 19:34:22 UTC+0000  
+0x000000007dde7800 svchost.exe        1948    492 0x0000000076d80000 2018-08-04 19:26:42 UTC+0000                                 
+0x000000007ddf3b30 msdtc.exe          1436    492 0x000000000fcd5000 2018-08-04 19:26:43 UTC+0000                                 
+0x000000007de01060 sc.exe             2028   3880 0x0000000077e22000 2018-08-04 19:33:49 UTC+0000   2018-08-04 19:34:03 UTC+0000  
+0x000000007de2e9e0 svchost.exe         808    492 0x000000001fe6a000 2018-08-04 19:26:18 UTC+0000                                 
+0x000000007de31b30 svchost.exe         844    492 0x000000001ff36000 2018-08-04 19:26:18 UTC+0000                                 
+0x000000007de4db30 svchost.exe         868    492 0x000000002027f000 2018-08-04 19:26:18 UTC+0000                                 
+0x000000007de753a0 audiodg.exe         960    808 0x000000001f6df000 2018-08-04 19:26:19 UTC+0000                                 
+0x000000007de97060 svchost.exe        1012    492 0x000000001f58e000 2018-08-04 19:26:20 UTC+0000                                 
+0x000000007ded37e0 svchost.exe         620    492 0x000000001e7a0000 2018-08-04 19:26:21 UTC+0000                                 
+0x000000007df5ab30 spoolsv.exe        1120    492 0x000000001b0e7000 2018-08-04 19:26:22 UTC+0000                                 
+0x000000007df718a0 svchost.exe        1164    492 0x000000001ac36000 2018-08-04 19:26:23 UTC+0000                                 
+0x000000007e000a90 chrome.exe         3924   4076 0x00000000006ba000 2018-08-04 19:29:51 UTC+0000                                 
+0x000000007e072b30 sc.exe             3504   3880 0x0000000040331000 2018-08-04 19:33:48 UTC+0000   2018-08-04 19:33:48 UTC+0000  
+0x000000007e0d1060 Lavasoft.WCAss     3496    492 0x0000000078089000 2018-08-04 19:33:49 UTC+0000                                 
+0x000000007e0f4060 winlogon.exe        432    380 0x00000000237dc000 2018-08-04 19:26:11 UTC+0000                                 
+0x000000007e1377c0 services.exe        492    396 0x000000002257a000 2018-08-04 19:26:12 UTC+0000                                 
+0x000000007e13f060 lsass.exe           500    396 0x000000002219a000 2018-08-04 19:26:12 UTC+0000                                 
+0x000000007e1461a0 lsm.exe             508    396 0x00000000221a2000 2018-08-04 19:26:12 UTC+0000                                 
+0x000000007e1bdb30 vmacthlp.exe        668    492 0x000000002120e000 2018-08-04 19:26:16 UTC+0000                                 
+0x000000007e1ebb30 svchost.exe         712    492 0x0000000020d1c000 2018-08-04 19:26:17 UTC+0000                                 
+0x000000007e4268b0 WebCompanion.e     3856   3880 0x000000003c956000 2018-08-04 19:34:05 UTC+0000                                 
+0x000000007e435240 chrome.exe         3648   4076 0x0000000067df6000 2018-08-04 19:33:38 UTC+0000                                 
+0x000000007e4643d0 conhost.exe        2420    348 0x0000000075907000 2018-08-04 19:34:22 UTC+0000   2018-08-04 19:34:22 UTC+0000  
+0x000000007e4af9f0 svchost.exe         164    492 0x000000003ffbd000 2018-08-04 19:28:42 UTC+0000                                 
+0x000000007e4c2700 mscorsvw.exe       3124    492 0x000000003fa08000 2018-08-04 19:28:43 UTC+0000                                 
+0x000000007e4e4b30 svchost.exe        3196    492 0x000000003e5d5000 2018-08-04 19:28:44 UTC+0000                                 
+0x000000007e5bfb30 ipconfig.exe       3788   3916 0x0000000039194000 2018-08-04 19:34:22 UTC+0000   2018-08-04 19:34:22 UTC+0000  
+0x000000007e5f98f0 chrome.exe         2748   4076 0x0000000074a76000 2018-08-04 19:31:15 UTC+0000                                 
+0x000000007e6c5b30 vmware-tray.ex     3720   3820 0x000000007653c000 2018-08-04 19:33:02 UTC+0000                                 
+0x000000007e6e3870 chrome.exe         4076   2728 0x0000000033cdc000 2018-08-04 19:29:30 UTC+0000                                 
+0x000000007e6eab30 chrome.exe         4084   4076 0x000000003338b000 2018-08-04 19:29:30 UTC+0000                                 
+0x000000007e6f7b30 chrome.exe         1808   4076 0x000000003ae8a000 2018-08-04 19:29:32 UTC+0000                                 
+0x000000007e702b30 chrome.exe          576   4076 0x0000000003f38000 2018-08-04 19:29:31 UTC+0000                                 
+0x000000007e772b30 cmd.exe            3916   1428 0x00000000199c1000 2018-08-04 19:34:22 UTC+0000   2018-08-04 19:34:22 UTC+0000  
+0x000000007e7ef1f0 chrome.exe         1796   4076 0x000000002b91a000 2018-08-04 19:33:41 UTC+0000                                 
+0x000000007e7fe210 SearchProtocol     3428   3064 0x0000000010edf000 2018-08-04 19:33:11 UTC+0000   2018-08-04 19:34:22 UTC+0000  
+0x000000007e8ed060 wininit.exe         396    336 0x00000000244f5000 2018-08-04 19:26:11 UTC+0000                                 
+0x000000007eac8380 csrss.exe           348    336 0x00000000245af000 2018-08-04 19:26:10 UTC+0000                                 
+0x000000007f28c2d0 PresentationFo      724    492 0x000000006541b000 2018-08-04 19:27:52 UTC+0000                                 
+0x000000007f2d3b30 csrss.exe           388    380 0x0000000074a96000 2018-08-04 19:26:11 UTC+0000                                 
+0x000000007f67e4d0 smss.exe            260      4 0x000000002abc9000 2018-08-04 19:26:03 UTC+0000                                 
+0x000000007fb24b30 WmiPrvSE.exe       1800    604 0x00000000134a3000 2018-08-04 19:26:39 UTC+0000                                 
+0x000000007fc3c890 svchost.exe         604    492 0x0000000021336000 2018-08-04 19:26:16 UTC+0000                                 
+0x000000007fe83740 System                4      0 0x0000000000187000 2018-08-04 19:26:03 UTC+0000                                 
+</code></pre>
+<p>把LunarMS.exe 也就是708 dump出来</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 memdump -p 708 -D ./
+Volatility Foundation Volatility Framework 2.6
+************************************************************************
+Writing LunarMS.exe [   708] to 708.dmp
+</code></pre>
+<p>然后就在里面找0x64 0x??{6-8} 0x40 0x06 0x??{18} 0x5a 0x0c 0x00{2}</p>
+<pre><code class="bash">strings 708.dmp|grep Z |grep d |grep @
+</code></pre>
+<p>发现太多了，只能换hashdump了</p>
+<pre><code class="bash">➜  Desktop hexdump -C 708.dmp |grep &quot;5a 0c 00&quot; -A 3 -B 3 
+......
+0b04ac30  10 00 00 00 00 35 c1 50  00 00 00 00 ec 0f 00 00  |.....5.P........|
+0b04ac40  84 c7 b6 1c 10 00 00 00  00 35 c1 50 64 0f c9 1c  |.........5.Pd...|
+0b04ac50  14 18 00 00 98 5a 6e 46  10 00 00 00 00 35 c1 50  |.....ZnF.....5.P|
+0b04ac60  00 00 00 00 5a 0c 00 00  64 c5 22 1e 10 00 00 00  |....Z...d.&quot;.....|
+0b04ac70  00 35 c1 50 6c 77 f8 1c  d3 a5 18 00 50 f5 04 1e  |.5.Plw......P...|
+0b04ac80  10 00 00 00 00 35 c1 50  48 b9 28 1f bd 1f 00 00  |.....5.PH.(.....|
+0b04ac90  fc 13 6f 46 10 00 00 00  00 35 c1 50 00 00 00 00  |..oF.....5.P....|
+--
+0c33a470  55 44 81 ab 55 44 81 ab  5c 4d ef a3 44 e7 fa 08  |UD..UD..\M..D...|
+0c33a480  dc 2d de 08 f6 e7 22 08  f6 e7 22 08 5c 4d 98 d4  |.-....&quot;...&quot;.\M..|
+0c33a490  db 68 8a 0c 00 00 00 80  92 06 00 00 ac 00 00 00  |.h..............|
+0c33a4a0  9a 23 32 23 0b 00 00 01  5a 0c 00 00 4d 30 72 74  |.#2#....Z...M0rt|
+0c33a4b0  79 4c 30 4c 00 00 00 00  00 00 00 21 4e 00 00 55  |yL0L.......!N..U|
+0c33a4c0  75 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |u...............|
+0c33a4d0  00 00 00 00 00 00 00 00  00 00 00 a4 00 00 3b 03  |..............;.|
+--
+0d4348e0  d0 f2 4c ce 31 15 f7 28  46 11 21 0f 86 15 a5 e5  |..L.1..(F.!.....|
+0d4348f0  0d 52 30 69 48 06 c7 9f  2d ae 6e e7 78 44 7b 53  |.R0iH...-.n.xD&#123;S|
+0d434900  ba 7d bc c2 b8 f9 74 7d  45 f5 64 6b 77 aa e3 70  |.&#125;....t&#125;E.dkw..p|
+0d434910  ff e9 d3 5d 10 88 84 de  01 1e 96 48 9c 5a 0c 00  |...].......H.Z..|
+0d434920  58 22 7c c5 0d 09 7b 51  21 f7 ce 48 1b 97 81 33  |X&quot;|...&#123;Q!..H...3|
+0d434930  00 f2 4d 3b 59 d5 e4 b5  ac ef 11 1d ba 47 ee ba  |..M;Y........G..|
+0d434940  4e ff 95 4e d2 b9 60 0c  f3 99 e4 fd c9 04 6c 79  |N..N..`.......ly|
+......
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;M0rtyL0L&#125;
+</code></pre>
+<h1 id="6-Silly-Rick-100"><a href="#6-Silly-Rick-100" class="headerlink" title="6 - Silly Rick 100"></a>6 - Silly Rick 100</h1><p>##question<br>Silly rick always forgets his email’s password, so he uses a Stored Password Services online to store his password. He always copy and paste the password so he will not get it wrong. whats rick’s email password?</p>
+<p>format: CTF{flag}<br>##solve<br>都说了copy了，直接看粘贴板</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 clipboard
+Volatility Foundation Volatility Framework 2.6
+Session    WindowStation Format                         Handle Object             Data                                              
+---------- ------------- ------------------ ------------------ ------------------ --------------------------------------------------
+         1 WinSta0       CF_UNICODETEXT                0x602e3 0xfffff900c1ad93f0 M@il_Pr0vid0rs                                    
+         1 WinSta0       CF_TEXT                          0x10 ------------------                                                   
+         1 WinSta0       0x150133L              0x200000000000 ------------------                                                   
+         1 WinSta0       CF_TEXT                           0x1 ------------------                                                   
+         1 ------------- ------------------           0x150133 0xfffff900c1c1adc0                                                   
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;M@il_Pr0vid0rs&#125;
+</code></pre>
+<h1 id="7-Hide-And-Seek-100"><a href="#7-Hide-And-Seek-100" class="headerlink" title="7- Hide And Seek 100"></a>7- Hide And Seek 100</h1><p>##question<br>The reason that we took rick’s PC memory dump is because there was a malware infection. Please find the malware process name (including the extension)</p>
+<p>BEAWARE! There are only 3 attempts to get the right flag!</p>
+<p>format: CTF{flag}</p>
+<p>##solve<br>pstree一下</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 pstree
+Volatility Foundation Volatility Framework 2.6
+Name                                                  Pid   PPid   Thds   Hnds Time
+-------------------------------------------------- ------ ------ ------ ------ ----
+ 0xfffffa801b27e060:explorer.exe                     2728   2696     33    854 2018-08-04 19:27:04 UTC+0000
+. 0xfffffa801b486b30:Rick And Morty                  3820   2728      4    185 2018-08-04 19:32:55 UTC+0000
+.. 0xfffffa801a4c5b30:vmware-tray.ex                 3720   3820      8    147 2018-08-04 19:33:02 UTC+0000
+. 0xfffffa801b2f02e0:WebCompanion.e                  2844   2728      0 ------ 2018-08-04 19:27:07 UTC+0000
+. 0xfffffa801a4e3870:chrome.exe                      4076   2728     44   1160 2018-08-04 19:29:30 UTC+0000
+.. 0xfffffa801a4eab30:chrome.exe                     4084   4076      8     86 2018-08-04 19:29:30 UTC+0000
+.. 0xfffffa801a5ef1f0:chrome.exe                     1796   4076     15    170 2018-08-04 19:33:41 UTC+0000
+.. 0xfffffa801aa00a90:chrome.exe                     3924   4076     16    228 2018-08-04 19:29:51 UTC+0000
+.. 0xfffffa801a635240:chrome.exe                     3648   4076     16    207 2018-08-04 19:33:38 UTC+0000
+.. 0xfffffa801a502b30:chrome.exe                      576   4076      2     58 2018-08-04 19:29:31 UTC+0000
+.. 0xfffffa801a4f7b30:chrome.exe                     1808   4076     13    229 2018-08-04 19:29:32 UTC+0000
+.. 0xfffffa801a7f98f0:chrome.exe                     2748   4076     15    181 2018-08-04 19:31:15 UTC+0000
+. 0xfffffa801b5cb740:LunarMS.exe                      708   2728     18    346 2018-08-04 19:27:39 UTC+0000
+. 0xfffffa801b1cdb30:vmtoolsd.exe                    2804   2728      6    190 2018-08-04 19:27:06 UTC+0000
+. 0xfffffa801b290b30:BitTorrent.exe                  2836   2728     24    471 2018-08-04 19:27:07 UTC+0000
+.. 0xfffffa801b4c9b30:bittorrentie.e                 2624   2836     13    316 2018-08-04 19:27:21 UTC+0000
+.. 0xfffffa801b4a7b30:bittorrentie.e                 2308   2836     15    337 2018-08-04 19:27:19 UTC+0000
+ 0xfffffa8018d44740:System                              4      0     95    411 2018-08-04 19:26:03 UTC+0000
+. 0xfffffa801947e4d0:smss.exe                         260      4      2     30 2018-08-04 19:26:03 UTC+0000
+ 0xfffffa801a2ed060:wininit.exe                       396    336      3     78 2018-08-04 19:26:11 UTC+0000
+. 0xfffffa801ab377c0:services.exe                     492    396     11    242 2018-08-04 19:26:12 UTC+0000
+.. 0xfffffa801afe7800:svchost.exe                    1948    492      6     96 2018-08-04 19:26:42 UTC+0000
+.. 0xfffffa801ae92920:vmtoolsd.exe                   1428    492      9    313 2018-08-04 19:26:27 UTC+0000
+... 0xfffffa801a572b30:cmd.exe                       3916   1428      0 ------ 2018-08-04 19:34:22 UTC+0000
+.. 0xfffffa801ae0f630:VGAuthService.                 1356    492      3     85 2018-08-04 19:26:25 UTC+0000
+.. 0xfffffa801abbdb30:vmacthlp.exe                    668    492      3     56 2018-08-04 19:26:16 UTC+0000
+.. 0xfffffa801aad1060:Lavasoft.WCAss                 3496    492     14    473 2018-08-04 19:33:49 UTC+0000
+.. 0xfffffa801a6af9f0:svchost.exe                     164    492     12    147 2018-08-04 19:28:42 UTC+0000
+.. 0xfffffa801ac2e9e0:svchost.exe                     808    492     22    508 2018-08-04 19:26:18 UTC+0000
+... 0xfffffa801ac753a0:audiodg.exe                    960    808      7    151 2018-08-04 19:26:19 UTC+0000
+.. 0xfffffa801ae7f630:dllhost.exe                    1324    492     15    207 2018-08-04 19:26:42 UTC+0000
+.. 0xfffffa801a6c2700:mscorsvw.exe                   3124    492      7     77 2018-08-04 19:28:43 UTC+0000
+.. 0xfffffa801b232060:sppsvc.exe                     2500    492      4    149 2018-08-04 19:26:58 UTC+0000
+.. 0xfffffa801abebb30:svchost.exe                     712    492      8    301 2018-08-04 19:26:17 UTC+0000
+.. 0xfffffa801ad718a0:svchost.exe                    1164    492     18    312 2018-08-04 19:26:23 UTC+0000
+.. 0xfffffa801ac31b30:svchost.exe                     844    492     17    396 2018-08-04 19:26:18 UTC+0000
+... 0xfffffa801b1fab30:dwm.exe                       2704    844      4     97 2018-08-04 19:27:04 UTC+0000
+.. 0xfffffa801988c2d0:PresentationFo                  724    492      6    148 2018-08-04 19:27:52 UTC+0000
+.. 0xfffffa801b603610:mscorsvw.exe                    412    492      7     86 2018-08-04 19:28:42 UTC+0000
+.. 0xfffffa8018e3c890:svchost.exe                     604    492     11    376 2018-08-04 19:26:16 UTC+0000
+... 0xfffffa8019124b30:WmiPrvSE.exe                  1800    604      9    222 2018-08-04 19:26:39 UTC+0000
+... 0xfffffa801b112060:WmiPrvSE.exe                  2136    604     12    324 2018-08-04 19:26:51 UTC+0000
+.. 0xfffffa801ad5ab30:spoolsv.exe                    1120    492     14    346 2018-08-04 19:26:22 UTC+0000
+.. 0xfffffa801ac4db30:svchost.exe                     868    492     45   1114 2018-08-04 19:26:18 UTC+0000
+.. 0xfffffa801a6e4b30:svchost.exe                    3196    492     14    352 2018-08-04 19:28:44 UTC+0000
+.. 0xfffffa801acd37e0:svchost.exe                     620    492     19    415 2018-08-04 19:26:21 UTC+0000
+.. 0xfffffa801b1e9b30:taskhost.exe                   2344    492      8    193 2018-08-04 19:26:57 UTC+0000
+.. 0xfffffa801ac97060:svchost.exe                    1012    492     12    554 2018-08-04 19:26:20 UTC+0000
+.. 0xfffffa801b3aab30:SearchIndexer.                 3064    492     11    610 2018-08-04 19:27:14 UTC+0000
+.. 0xfffffa801aff3b30:msdtc.exe                      1436    492     14    155 2018-08-04 19:26:43 UTC+0000
+. 0xfffffa801ab3f060:lsass.exe                        500    396      7    610 2018-08-04 19:26:12 UTC+0000
+. 0xfffffa801ab461a0:lsm.exe                          508    396     10    148 2018-08-04 19:26:12 UTC+0000
+ 0xfffffa801a0c8380:csrss.exe                         348    336      9    563 2018-08-04 19:26:10 UTC+0000
+. 0xfffffa801a6643d0:conhost.exe                     2420    348      0     30 2018-08-04 19:34:22 UTC+0000
+ 0xfffffa80198d3b30:csrss.exe                         388    380     11    460 2018-08-04 19:26:11 UTC+0000
+ 0xfffffa801aaf4060:winlogon.exe                      432    380      3    113 2018-08-04 19:26:11 UTC+0000
+ 0xfffffa801b18f060:WebCompanionIn                   3880   1484     15    522 2018-08-04 19:33:07 UTC+0000
+. 0xfffffa801aa72b30:sc.exe                          3504   3880      0 ------ 2018-08-04 19:33:48 UTC+0000
+. 0xfffffa801aeb6890:sc.exe                           452   3880      0 ------ 2018-08-04 19:33:48 UTC+0000
+. 0xfffffa801a6268b0:WebCompanion.e                  3856   3880     15    386 2018-08-04 19:34:05 UTC+0000
+. 0xfffffa801b08f060:sc.exe                          3208   3880      0 ------ 2018-08-04 19:33:47 UTC+0000
+. 0xfffffa801ac01060:sc.exe                          2028   3880      0 ------ 2018-08-04 19:33:49 UTC+0000
+ 0xfffffa801b1fd960:notepad.exe                      3304   3132      2     79 2018-08-04 19:34:10 UTC+0000
+</code></pre>
+<p>很多都是没用的，但是看到有一个很奇怪，ppid比pid还大</p>
+<pre><code class="bash">.. 0xfffffa801a4c5b30:vmware-tray.ex                 3720   3820      8    147 2018-08-04 19:33:02 UTC+0000
+</code></pre>
+<p>dlllist一下</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 dlllist -p 3820
+Volatility Foundation Volatility Framework 2.6
+************************************************************************
+Rick And Morty pid:   3820
+Command line : &quot;C:\Torrents\Rick And Morty season 1 download.exe&quot; 
+Note: use ldrmodules for listing DLLs in Wow64 processes
+
+
+Base                             Size          LoadCount LoadTime                       Path
+------------------ ------------------ ------------------ ------------------------------ ----
+0x0000000000400000            0x56000             0xffff 1970-01-01 00:00:00 UTC+0000   C:\Torrents\Rick And Morty season 1 download.exe
+0x00000000776f0000           0x1a9000             0xffff 1970-01-01 00:00:00 UTC+0000   C:\Windows\SYSTEM32\ntdll.dll
+0x0000000075210000            0x3f000                0x3 2018-08-04 19:32:55 UTC+0000   C:\Windows\SYSTEM32\wow64.dll
+0x00000000751b0000            0x5c000                0x1 2018-08-04 19:32:55 UTC+0000   C:\Windows\SYSTEM32\wow64win.dll
+0x00000000751a0000             0x8000                0x1 2018-08-04 19:32:55 UTC+0000   C:\Windows\SYSTEM32\wow64cpu.dll
+
+➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 dlllist -p 3720
+Volatility Foundation Volatility Framework 2.6
+************************************************************************
+vmware-tray.ex pid:   3720
+Command line : &quot;C:\Users\Rick\AppData\Local\Temp\RarSFX0\vmware-tray.exe&quot; 
+Note: use ldrmodules for listing DLLs in Wow64 processes
+
+
+Base                             Size          LoadCount LoadTime                       Path
+------------------ ------------------ ------------------ ------------------------------ ----
+0x0000000000ec0000            0x6e000             0xffff 1970-01-01 00:00:00 UTC+0000   C:\Users\Rick\AppData\Local\Temp\RarSFX0\vmware-tray.exe
+0x00000000776f0000           0x1a9000             0xffff 1970-01-01 00:00:00 UTC+0000   C:\Windows\SYSTEM32\ntdll.dll
+0x0000000075210000            0x3f000                0x3 2018-08-04 19:33:03 UTC+0000   C:\Windows\SYSTEM32\wow64.dll
+0x00000000751b0000            0x5c000                0x1 2018-08-04 19:33:03 UTC+0000   C:\Windows\SYSTEM32\wow64win.dll
+0x00000000751a0000             0x8000                0x1 2018-08-04 19:33:03 UTC+0000   C:\Windows\SYSTEM32\wow64cpu.dll
+</code></pre>
+<p>temp执行，看起来就有问题了，就他了<br>##flag</p>
+<pre><code class="bash">CTF&#123;vmware-tray.exe&#125;
+</code></pre>
+<h1 id="8-Path-To-Glory-150"><a href="#8-Path-To-Glory-150" class="headerlink" title="8 - Path To Glory 150"></a>8 - Path To Glory 150</h1><p>##question<br>How did the malware got to rick’s PC? It must be one of rick old illigal habits…<br>format: CTF{…}</p>
+<p>##solve<br>malware，那就是看软件了，filescan一下，发现太多，过滤出rick还是多，以Rick And Morty过滤</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 filescan |grep &quot;Rick And Morty&quot;
+Volatility Foundation Volatility Framework 2.6
+0x000000007d63dbc0     10      0 R--r-d \Device\HarddiskVolume1\Torrents\Rick And Morty season 1 download.exe
+0x000000007d8813c0      2      0 RW-rwd \Device\HarddiskVolume1\Users\Rick\Downloads\Rick And Morty season 1 download.exe.torrent
+0x000000007da56240      2      0 RW-rwd \Device\HarddiskVolume1\Torrents\Rick And Morty season 1 download.exe
+0x000000007dae9350      2      0 RWD--- \Device\HarddiskVolume1\Users\Rick\AppData\Roaming\BitTorrent\Rick And Morty season 1 download.exe.1.torrent
+0x000000007dcbf6f0      2      0 RW-rwd \Device\HarddiskVolume1\Users\Rick\AppData\Roaming\BitTorrent\Rick And Morty season 1 download.exe.1.torrent
+0x000000007e710070      8      0 R--rwd \Device\HarddiskVolume1\Torrents\Rick And Morty season 1 download.exe
+</code></pre>
+<p>把文件dump出来</p>
+<pre><code>➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 dumpfiles -Q 0x000000007dae9350 -D .
+Volatility Foundation Volatility Framework 2.6
+DataSectionObject 0x7dae9350   None   \Device\HarddiskVolume1\Users\Rick\AppData\Roaming\BitTorrent\Rick And Morty season 1 download.exe.1.torrent
+➜  Desktop 
+➜  Desktop ls
+1.py                              MS17-010       pwn_exp.py
+3720.dmp                          OtterCTF.7z    pygmcrypto
+executable.3720.exe               OtterCTF.vmem  strings.txt
+f                                 out.txt        verinfo.txt
+file.None.0xfffffa801b42c9e0.dat  plugin         volatility-2.6.zip
+h.dd                              pwn            volatility-master
+help.txt                          pwn_1          welcome.zip
+➜  Desktop strings file.None.0xfffffa801b42c9e0.dat
+d8:announce44:udp://tracker.openbittorrent.com:80/announce13:announce-listll44:udp://tracker.openbittorrent.com:80/announceel42:udp://tracker.opentrackr.org:1337/announceee10:created by17:BitTorrent/7.10.313:creation datei1533150595e8:encoding5:UTF-84:infod6:lengthi456670e4:name36:Rick And Morty season 1 download.exe12:piece lengthi16384e6:pieces560:\I
+!PC&lt;^X
+B.k_Rk
+0&lt;;O87o
+!4^&quot;
+3hq,
+&amp;iW1|
+K68:o
+w~Q~YT
+$$o9p
+bwF:u
+e7:website19:M3an_T0rren7_4_R!cke
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;M3an_T0rren7_4_R!ck&#125;
+</code></pre>
+<h1 id="9-Path-To-Glory-200"><a href="#9-Path-To-Glory-200" class="headerlink" title="9 - Path To Glory 200"></a>9 - Path To Glory 200</h1><p>##question<br>Continue the search after the the way that malware got in.<br>format: CTF{…}</p>
+<p>##solve<br>先dump出所有的chrome进程</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 memdump -n chrome -D ./f/
+
+Volatility Foundation Volatility Framework 2.6
+************************************************************************
+Writing chrome.exe [  4076] to 4076.dmp
+************************************************************************
+Writing chrome.exe [  4084] to 4084.dmp
+************************************************************************
+Writing chrome.exe [   576] to 576.dmp
+************************************************************************
+Writing chrome.exe [  1808] to 1808.dmp
+************************************************************************
+Writing chrome.exe [  3924] to 3924.dmp
+************************************************************************
+Writing chrome.exe [  2748] to 2748.dmp
+************************************************************************
+Writing chrome.exe [  3648] to 3648.dmp
+************************************************************************
+Writing chrome.exe [  1796] to 1796.dmp
+</code></pre>
+<p>查找下download.exe.torren</p>
+<pre><code class="bash">➜  Desktop strings ./f/* | grep &quot;download\.exe\.torrent&quot; 
+Rick And Morty season 1 download.exe.torrent
+==e1f778b7-adf6-48f2-816d-740c99c5f9a4C:\Users\Rick\Downloads\Rick And Morty season 1 download.exe.torrentC:\Users\Rick\Downloads\Rick And Morty season 1 download.exe.torrent
+==de371043-340d-42e5-8e16-90e6fbfbc509C:\Users\Rick\Downloads\Rick And Morty season 1 download.exe.torrentC:\Users\Rick\Downloads\Rick And Morty season 1 download.exe.torrent
+Visited: Rick@file:///C:/Users/Rick/Downloads/Rick%20And%20Morty%20season%201%20download.exe.torrent
+Rick And Morty season 1 download.exe.torrent
+Rick And Morty season 1 download.exe.torrent
+Rick And Morty season 1 download.exe.torrent
+Rick And Morty season 1 download.exe.torrent
+Content-Disposition: attachment; filename=&quot;Rick And Morty season 1 download.exe.torrent&quot;
+attachment; filename=&quot;Rick And Morty season 1 download.exe.torrent&quot;
+Download complete: Rick And Morty season 1 download.exe.torrent. Press Shift+F6 to cycle to the downloads bar area.
+</code></pre>
+<pre><code class="bash">➜  Desktop strings ./f/* | grep &quot;download\.exe\.torrent&quot; -A 10 -B 10
+display:inline;width:56px;height:200px;m&gt;
+Hum@n_I5_Th3_Weak3s7_Link_In_Th3_Ch@inYear
+//sec-s.uicdn.com/nav-cdn/home/preloader.gif
+simple-icon_toolbar-change-view-horizontal
+ nnx-track-sec-click-communication-inboxic.com
+nx-track-sec-click-dashboard-hide_smileyable
+Nftd-box stem-north big fullsize js-focusable
+js-box-flex need-overlay js-componentone
+Jhttps://search.mail.com/web [q origin ]Year
+ntrack-and-trace__delivery-info--has-iconf
+Rick And Morty season 1 download.exe.torrent
+tbl_1533411035475_7.0.1.40728_2033115181
+panel-mail-display-table-mail-default35&quot;
+Cnpanel-mail-display-table-mail-horizontal.js
+trc_rbox text-links-a trc-content-sponsored 
+identity_OjpwcmVsb2FkZXIuaHRtbC50d2ln
+Move the widget to its desired position.3c8=
+Set-Cookie, no-store, proxy-revalidateHxRKw=
+Set-Cookie, no-store, proxy-revalidate143/
+tbl_1533411035475_7.0.9.40728_2033115181
+&quot;mail.com Update&quot; &lt;service@corp.mail.com&gt;e
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;Hum@n_I5_Th3_Weak3s7_Link_In_Th3_Ch@in&#125;
+</code></pre>
+<h1 id="10-Bit-4-Bit-100"><a href="#10-Bit-4-Bit-100" class="headerlink" title="10 - Bit 4 Bit 100"></a>10 - Bit 4 Bit 100</h1><p>##question<br>We’ve found out that the malware is a ransomware. Find the attacker’s bitcoin address.<br>format: CTF{…}</p>
+<p>##solve<br>dump出之前的exe</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 procdump -p 3720 -D ./
+Volatility Foundation Volatility Framework 2.6
+Process(V)         ImageBase          Name                 Result
+------------------ ------------------ -------------------- ------
+0xfffffa801a4c5b30 0x0000000000ec0000 vmware-tray.ex       OK: executable.3720.exe
+</code></pre>
+<p>然后ida拖进去逆下就ok</p>
+<pre><code class="bash">    text &quot;UTF-16LE&quot;, &quot;Click next for more information and payment on how &quot;
+    text &quot;UTF-16LE&quot;, &quot;to get your files back.&quot;,0
+aButton1:                               // DATA XREF: hidden_tear.Form1__InitializeComponent+1C6↑o
+                                        // hidden_tear.Form2__InitializeComponent+122↑o ...
+    text &quot;UTF-16LE&quot;, &quot;button1&quot;,0
+aNext:                                  // DATA XREF: hidden_tear.Form1__InitializeComponent+1FC↑o
+    text &quot;UTF-16LE&quot;, &quot;Next&quot;,0
+aPicturebox1:                           // DATA XREF: hidden_tear.Form1__InitializeComponent+25E↑o
+                                        // hidden_tear.Form3__InitializeComponent+72↑o
+    text &quot;UTF-16LE&quot;, &quot;pictureBox1&quot;,0
+aThisIcon:                              // DATA XREF: hidden_tear.Form1__InitializeComponent+351↑o
+    text &quot;UTF-16LE&quot;, &quot;$this.Icon&quot;,0
+aForm1:                                 // DATA XREF: hidden_tear.Form1__InitializeComponent+37C↑o
+    text &quot;UTF-16LE&quot;, &quot;Form1&quot;,0
+aTextbox1:                              // DATA XREF: hidden_tear.Form2__InitializeComponent+99↑o
+                                        // hidden_tear.Form3__InitializeComponent+120↑o
+    text &quot;UTF-16LE&quot;, &quot;textBox1&quot;,0
+aTextbox1Text:                          // DATA XREF: hidden_tear.Form2__InitializeComponent+E0↑o
+    text &quot;UTF-16LE&quot;, &quot;textBox1.Text&quot;,0
+aNext_0:                                // DATA XREF: hidden_tear.Form2__InitializeComponent+158↑o
+    text &quot;UTF-16LE&quot;, &quot;Next,&quot;,0
+aForm2:                                 // DATA XREF: hidden_tear.Form2__InitializeComponent+201↑o
+    text &quot;UTF-16LE&quot;, &quot;Form2&quot;,0
+aCheckingPaymen:                        // DATA XREF: hidden_tear.Form3__button1_Click+1↑o
+    text &quot;UTF-16LE&quot;, &quot;Checking Payment.................Please Wait&quot;,0
+aPleaseWait:                            // DATA XREF: hidden_tear.Form3__button1_Click+6↑o
+    text &quot;UTF-16LE&quot;, &quot;Please wait&quot;,0
+aYourPaymentHas:                        // DATA XREF: hidden_tear.Form3__button1_Click+11↑o
+    text &quot;UTF-16LE&quot;, &quot;Your Payment has failed, The funs have been sent ba&quot;
+    text &quot;UTF-16LE&quot;, &quot;ck to your wallet. Please send it again&quot;,0
+aError:                                 // DATA XREF: hidden_tear.Form3__button1_Click+16↑o
+    text &quot;UTF-16LE&quot;, &quot;Error&quot;,0
+a1mmpemebjkqxg8:                        // DATA XREF: hidden_tear.Form3__InitializeComponent+163↑o
+    text &quot;UTF-16LE&quot;, &quot;1MmpEmebJkqXG8nQv4cjJSmxZQFVmFo63M&quot;,0
+aSend016ToTheAd:                        // DATA XREF: hidden_tear.Form3__InitializeComponent+219↑o
+    text &quot;UTF-16LE&quot;, &quot;Send 0.16 to the address below.&quot;,0
+aIPaidNowGiveMe:                        // DATA XREF: hidden_tear.Form3__InitializeComponent+2B5↑o
+    text &quot;UTF-16LE&quot;, &quot;I paid, Now give me back my files.&quot;,0
+aForm3:                                 // DATA XREF: hidden_tear.Form3__InitializeComponent+376↑o
+    text &quot;UTF-16LE&quot;, &quot;Form3&quot;,0
+aHiddenTearProp:                        // DATA XREF: hidden_tear.Properties.Resources__get_ResourceManager+E↑o
+    text &quot;UTF-16LE&quot;, &quot;hidden_tear.Properties.Resources&quot;,0
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;1MmpEmebJkqXG8nQv4cjJSmxZQFVmFo63M&#125;
+</code></pre>
+<h1 id="11-Graphic’s-For-The-Weak-150"><a href="#11-Graphic’s-For-The-Weak-150" class="headerlink" title="11 - Graphic’s For The Weak 150"></a>11 - Graphic’s For The Weak 150</h1><p>##question<br>There’s something fishy in the malware’s graphics.<br>format: CTF{…}</p>
+<p>##solve<br>要提取图片，我太菜ida搞不动了，只能上dnspy了(ps:还是太菜了没想到，为什么不上一题就用)<br>拖开就能看到<br>##flag</p>
+<pre><code class="bash">CTF&#123;S0_Just_M0v3_Socy&#125;
+</code></pre>
+<h1 id="12-Recovery-300"><a href="#12-Recovery-300" class="headerlink" title="12 - Recovery 300"></a>12 - Recovery 300</h1><p>##question<br>Rick got to have his files recovered! What is the random password used to encrypt the files?</p>
+<p>format: CTF{…}</p>
+<p>##solve<br>form1里面有个sendpassword函数，不过没发送只是用computerName+username</p>
+<pre><code class="bash">// hidden_tear.Form1
+// Token: 0x06000006 RID: 6 RVA: 0x000022E8 File Offset: 0x000004E8
+public void SendPassword(string password)
+&#123;
+  string text = string.Concat(new string[]
+  &#123;
+    this.computerName,
+    &quot;-&quot;,
+    this.userName,
+    &quot; &quot;,
+    password
+  &#125;);
+&#125;
+</code></pre>
+<p>strings一下吧</p>
+<pre><code class="bash">➜  Desktop strings -el OtterCTF.vmem | grep WIN-LO6FAF3DTFE-Rick  
+WIN-LO6FAF3DTFE-Rick aDOBofVYUNVnmp7
+</code></pre>
+<p>##flag</p>
+<pre><code class="bash">CTF&#123;aDOBofVYUNVnmp7&#125;
+</code></pre>
+<h1 id="13-Closure-400"><a href="#13-Closure-400" class="headerlink" title="13 - Closure 400"></a>13 - Closure 400</h1><p>##question<br>Now that you extracted the password from the memory, could you decrypt rick’s files?</p>
+<p>##solve<br>先查看下exe的pdb信息</p>
+<pre><code class="bash">➜  Desktop strings executable.3720.exe|grep pdb
+C:\Users\Tyler\Desktop\hidden-tear-master\hidden-tear\hidden-tear\obj\Debug\VapeHacksLoader.pdb
+</code></pre>
+<p>之前filescan时记得桌面有个flag.txt</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 filescan |grep Desktop   
+Volatility Foundation Volatility Framework 2.6
+0x000000007d660500      2      0 -W-r-- \Device\HarddiskVolume1\Users\Rick\Desktop\READ_IT.txt
+0x000000007d74c2d0      2      1 R--rwd \Device\HarddiskVolume1\Users\Rick\Desktop
+0x000000007d7f98c0      2      1 R--rwd \Device\HarddiskVolume1\Users\Rick\Desktop
+0x000000007d864250     16      0 R--rwd \Device\HarddiskVolume1\Users\Public\Desktop\desktop.ini
+0x000000007d8a9070     16      0 R--rwd \Device\HarddiskVolume1\Users\Rick\Desktop\desktop.ini
+0x000000007d8ac800      2      1 R--rwd \Device\HarddiskVolume1\Users\Public\Desktop
+0x000000007d8ac950      2      1 R--rwd \Device\HarddiskVolume1\Users\Public\Desktop
+0x000000007e410890     16      0 R--r-- \Device\HarddiskVolume1\Users\Rick\Desktop\Flag.txt
+0x000000007e5c52d0      3      0 R--rwd \Device\HarddiskVolume1\Users\Rick\AppData\Roaming\Microsoft\Windows\SendTo\Desktop.ini
+0x000000007e77fb60      1      1 R--rw- \Device\HarddiskVolume1\Users\Rick\Desktop
+</code></pre>
+<p>先把文件dump出来</p>
+<pre><code class="bash">➜  Desktop volatility -f OtterCTF.vmem --profile=Win7SP1x64 dumpfiles -Q 0x000000007e410890 -D ./f/
+
+Volatility Foundation Volatility Framework 2.6
+DataSectionObject 0x7e410890   None   \Device\HarddiskVolume1\Users\Rick\Desktop\Flag.txt
+➜  Desktop file ./f/file.None.0xfffffa801b0532e0.dat 
+./f/file.None.0xfffffa801b0532e0.dat: data
+</code></pre>
+<p>移除文件后面的00 字节用hidden-tear-decrypto工具密码<code>aDOBofVYUNVnmp7</code>解开即得到flag<br>##flag</p>
+<pre><code class="bash">CTF&#123;Im_Th@_B3S7_RicK_0f_Th3m_4ll&#125;
+</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="../../../../about" rel="external nofollow noreferrer">xyzz</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xyzzpwn.top">http://www.xyzzpwn.top</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="../../../../about" target="_blank">xyzz</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="../../../../tags/Forensics/">
+                                    <span class="chip bg-color">Forensics</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="../../../../libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="../../../../libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="../../../../2019/04/22/pwnable-kr-5/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/11.jpg" class="responsive-img" alt="pwnable-kr-5">
+                        
+                        <span class="card-title">pwnable-kr-5</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1.dragonsolveoverflow
+while ( *((_BYTE *)ptr + 8) &gt; 0 );
+
+
+uaf
+.text:080488C0                 mov     eax, [ebp+drago
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-22
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/bin/" class="post-category">
+                                    bin
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/Pwn/">
+                        <span class="chip bg-color">Pwn</span>
+                    </a>
+                    
+                    <a href="../../../../tags/pwnable-kr/">
+                        <span class="chip bg-color">pwnable.kr</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="../../../11/20/lctf2018-god-of-domain-pentest/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/5.jpg" class="responsive-img" alt="lctf2018-god of domain pentest">
+                        
+                        <span class="card-title">lctf2018-god of domain pentest</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            question题目描述：
+windows域环境权限不好配，还请各位师傅高抬贵手，不要搅屎 
+c段只用到了0-20，不需要扫21-255，端口也只开放了常用端口。 
+web.lctf.com中有个域用户是web.lctf.com\bugua
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-11-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/web/" class="post-category">
+                                    web
+                                </a>
+                            
+                            <a href="../../../../categories/writeup/" class="post-category">
+                                    writeup
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/Pentest/">
+                        <span class="chip bg-color">Pentest</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="../../../../libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="../../../../libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('1'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../../../libs/materialize/materialize.min.js"></script>
+    <script src="../../../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../../../libs/aos/aos.js"></script>
+    <script src="../../../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

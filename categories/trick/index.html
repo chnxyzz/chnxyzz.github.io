@@ -1,0 +1,1134 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="分类: trick, algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>分类: trick | xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../css/my.css">
+
+    <script src="../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                welcome
+                
+            </div>
+
+            <div class="description center-align">
+                
+                <span id="subtitle"></span>
+                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                <script>
+                    var typed = new Typed("#subtitle", {
+                        strings: ['只想睡觉觉','only want to sleep'],
+                        startDelay: 300,
+                        typeSpeed: 100,
+                        loop: true,
+                        backSpeed: 50,
+                        showCursor: true
+                    });
+                </script>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // 每天切换 banner 图.  Switch banner image every day.
+    var bannerUrl = "../../medias/banner/" + new Date().getDay() + '.jpg';
+    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+</script>
+
+
+    </div>
+</div>
+
+<main class="content">
+
+    
+
+<div id="category-cloud" class="container chip-container">
+    <div class="card">
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
+            </div>
+            <div class="tag-chips">
+                
+                
+                
+                <a href="../bin/" title="bin: 12">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F9EBEA;">bin
+                        <span class="tag-length">12</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../cve/" title="cve: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F5EEF8;">cve
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../repair/" title="repair: 9">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #D5F5E3;">repair
+                        <span class="tag-length">9</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../virtualization/" title="virtualization: 5">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #E8F8F5;">virtualization
+                        <span class="tag-length">5</span>
+                    </span>
+                </a>
+                
+                
+                <a href="" title="trick: 12">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            style="background-color: #FEF9E7;">trick
+                        <span class="tag-length">12</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../iot/" title="iot: 3">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F8F9F9;">iot
+                        <span class="tag-length">3</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../devops/" title="devops: 11">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #82E0AA;">devops
+                        <span class="tag-length">11</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../frequent/" title="frequent: 8">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #D7BDE2;">frequent
+                        <span class="tag-length">8</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../web/" title="web: 4">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #A3E4D7;">web
+                        <span class="tag-length">4</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../deeplearn/" title="deeplearn: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #85C1E9;">deeplearn
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../writeup/" title="writeup: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F8C471;">writeup
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="../crypto/" title="crypto: 3">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F9E79F;">crypto
+                        <span class="tag-length">3</span>
+                    </span>
+                </a>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2022/08/19/pandas-de-to-sql-jia-su-shi-bai-ji-lu/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/3.jpg" class="responsive-img" alt="pandas的to_sql加速失败记录">
+                            
+                            <span class="card-title">pandas的to_sql加速失败记录</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介在使用python作数据分析的时候，不免会用到pandas，而pandas与数据库(mysql)的交互在速度上一直是一个瓶颈
+通过网上的一些笔记，发现了一些加速的方法，目前来看都是不可用的。
+记录先随便生成一个100w行的文件，在实际工
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/pandas/">
+                            <span class="chip bg-color">pandas</span>
+                        </a>
+                        
+                        <a href="../../tags/Mysql/">
+                            <span class="chip bg-color">Mysql</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2021/12/27/hexo-qian-yi-dao-hugo-de-yi-xie-ji-lu/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/21.jpg" class="responsive-img" alt="hexo迁移到hugo的一些记录">
+                            
+                            <span class="card-title">hexo迁移到hugo的一些记录</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介随着博客篇数的增多，hexo在编译出静态化页面花费的时间越来越多。正值准备对内网和外网建立两套blog，内网的内容可以相对私密一些。在迁移的过程中也有一定思想阻碍，毕竟hexo用了这么多年，迁移的成本的确有点高，但是通过实验了hugo的
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/hexo/">
+                            <span class="chip bg-color">hexo</span>
+                        </a>
+                        
+                        <a href="../../tags/hugo/">
+                            <span class="chip bg-color">hugo</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2021/10/10/guan-yu-gitlab-xiang-mu-fang-wen-ling-pai-de-shi-yong/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/13.jpg" class="responsive-img" alt="关于gitlab项目访问令牌的使用">
+                            
+                            <span class="card-title">关于gitlab项目访问令牌的使用</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介以前使用gitlab直接都是把机子的ssh密钥丢进去，随着机子越来越多，需要使用项目访问令牌方便进行，保证不用的时候删令牌或者自动令牌过期就行，从而保证安全性
+项目访问令牌
+
+
+
+范围
+描述
+
+
+
+api
+授予对作用域项目 API 的完
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/gitlab/">
+                            <span class="chip bg-color">gitlab</span>
+                        </a>
+                        
+                        <a href="../../tags/oauth2/">
+                            <span class="chip bg-color">oauth2</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2021/10/10/guan-yu-gitlab-he-nextcloud-zeng-jia-ssl-de-ji-lu/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/19.jpg" class="responsive-img" alt="关于gitlab和nextcloud增加ssl的记录">
+                            
+                            <span class="card-title">关于gitlab和nextcloud增加ssl的记录</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介给gitlab 和 nextcloud 添加ssl证书，方便从外网访问时的安全性，但是也同时保证内网的便捷可用，尽量做到不改动
+gitlab修改gitlab.rb修改external_url
+external_url &#39;http
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/nextcloud/">
+                            <span class="chip bg-color">nextcloud</span>
+                        </a>
+                        
+                        <a href="../../tags/https/">
+                            <span class="chip bg-color">https</span>
+                        </a>
+                        
+                        <a href="../../tags/gitlab/">
+                            <span class="chip bg-color">gitlab</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2021/01/13/qq-kong-jian-pi-liang-shan-chu-dai-ma/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/14.jpg" class="responsive-img" alt="qq空间批量删除代码">
+                            
+                            <span class="card-title">qq空间批量删除代码</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介对于qq空间批量删除日志和相册的代码直接抄网上日志的，自己改改
+日志
+(async () =&gt; &#123;
+    let frameDocument = document.querySelector(&#39;.app_can
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-13
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/QQ%E7%A9%BA%E9%97%B4/">
+                            <span class="chip bg-color">QQ空间</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/10/19/guan-yu-python-huan-jing-de-bian-li-cao-zuo/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/22.jpg" class="responsive-img" alt="关于python环境的便利操作">
+                            
+                            <span class="card-title">关于python环境的便利操作</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介关于linux下python环境还是conda使用的方便，所以对于conda进行一个常用的配置
+配置conda源cat &gt; ~/.condarc &lt;&lt; EOF
+channels:
+  - defaults
+show_c
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                <a href="../devops/" class="post-category">
+                                    devops
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/python/">
+                            <span class="chip bg-color">python</span>
+                        </a>
+                        
+                        <a href="../../tags/conda/">
+                            <span class="chip bg-color">conda</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/08/28/yuan-cheng-lian-jie-de-yi-xie-bi-ji/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/3.jpg" class="responsive-img" alt="远程连接的一些笔记">
+                            
+                            <span class="card-title">远程连接的一些笔记</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介主要是远程到远程服务器的一些用法
+
+ssh配合xserver达到远程应用图像显示到本地
+linux下smb文件共享
+
+ssh+xserverserver配置编辑/etc/ssh/sshd_config修改下面的值
+X11Forwardi
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/ssh/">
+                            <span class="chip bg-color">ssh</span>
+                        </a>
+                        
+                        <a href="../../tags/smb/">
+                            <span class="chip bg-color">smb</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/08/22/esxi-da-jian-opwnert/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/19.jpg" class="responsive-img" alt="esxi搭建opwnert">
+                            
+                            <span class="card-title">esxi搭建opwnert</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介使用esxi7.0安装openwrt19.07.3openwrt做旁路由并且配置出全局代理，保证网络的唯一稳定
+安装下载opwnwrt我使用的是
+https://downloads.openwrt.org/releases/19.07.
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-22
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Esxi/">
+                            <span class="chip bg-color">Esxi</span>
+                        </a>
+                        
+                        <a href="../../tags/Openwrt/">
+                            <span class="chip bg-color">Openwrt</span>
+                        </a>
+                        
+                        <a href="../../tags/FullProxy/">
+                            <span class="chip bg-color">FullProxy</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2019/09/26/extend-hdd-in-linux-with-command/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/18.jpg" class="responsive-img" alt="extend hdd in linux with command">
+                            
+                            <span class="card-title">extend hdd in linux with command</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+commanddf -lh
+fdisk /dev/sda
+Welcome to fdisk (util-linux 2.31.1).
+Changes will remain in memory only, until you decide
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-26
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Linux/">
+                            <span class="chip bg-color">Linux</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2019/09/20/mac-install-pwntools/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/10.jpg" class="responsive-img" alt="mac install pwntools">
+                            
+                            <span class="card-title">mac install pwntools</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+conda create -n py27 python=2.7
+source activate py27
+MACOS_UNIVERSAL=no python -m pip install pwntools
+
+
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-20
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/pwntools/">
+                            <span class="chip bg-color">pwntools</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2018/06/08/ssh-pi-by-python/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/6.jpg" class="responsive-img" alt="ssh pi by python">
+                            
+                            <span class="card-title">ssh pi by python</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                use python to scan raspberry pi
+
+#-*- coding: utf-8 -*-
+#!/usr/bin/python
+import paramiko
+import threading
+
+def ssh2(ip,
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-06-08
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Raspberrypi/">
+                            <span class="chip bg-color">Raspberrypi</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2018/05/22/ngrok-esxi-pfsense/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="../../medias/featureimages/18.jpg" class="responsive-img" alt="ngrok+esxi+pfsense">
+                            
+                            <span class="card-title">ngrok+esxi+pfsense</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                With a thinking,try to make a cloud environment to do my job,that i can use a chromebook for a whole day work.for this,I
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-05-22
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Esxi/">
+                            <span class="chip bg-color">Esxi</span>
+                        </a>
+                        
+                        <a href="../../tags/ngrok/">
+                            <span class="chip bg-color">ngrok</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </article>
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../libs/materialize/materialize.min.js"></script>
+    <script src="../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../libs/aos/aos.js"></script>
+    <script src="../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

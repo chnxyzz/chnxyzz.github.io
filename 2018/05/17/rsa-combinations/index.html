@@ -1,0 +1,932 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="rsa_combinations, algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>rsa_combinations | xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/my.css">
+
+    <script src="../../../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="../../../../libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '../../../../index.html';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('../../../../medias/featureimages/19.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">rsa_combinations</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="../../../../libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="../../../../tags/RSA/">
+                                <span class="chip bg-color">RSA</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="../../../../categories/crypto/" class="post-category">
+                                crypto
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-05-17
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-05-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    390
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    2 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>15号做的，算是迁移博客后的第一篇吧</p>
+<pre><code class="python">#! /usr/bin/python2.7
+
+from Crypto.Util.number import size,bytes_to_long,getStrongPrime
+from itertools import combinations
+
+msg = bytes_to_long(&quot;Your secret flag is : flag&#123;**************************&#125;&quot;)
+e = 65537
+pri = []
+
+f = open(&#39;cipherx.txt&#39;, &#39;w&#39;)
+
+for i in range(5):
+    pri.append(getStrongPrime(1024,65537))
+print(&#39;pri&#39;,pri)
+for k in combinations(pri, 2):
+    n = k[0] * k[1]
+    print k[0],k[1]
+    f.write(str(pow(msg, e, n)) + &#39;\n&#39;)
+</code></pre>
+<p>由5个1024bit的强素数进行两两组合一共生成10组密文如下：</p>
+<span id="more"></span>
+<pre><code class="python">13455981172983326464102311937762831661788310626361076786164994487793945326981111197066703467784063584677545316464486222690177319997065759168374653040496712059568682406584202721616582863702654975066950060466986422582257001703187853927809075825528343329091775200012208860563692058684819775698290978617780577594014210672865880497874392738697086445744342656347507587613428993075257255547029724259635931665971785614738909042286207279739603543188892504358133043289264464915763121424437513688474543252743250750837754962444189265768058493217120380229238478428390747580847275659398491959011425398794606200760449574140326761335
+4888187708328317620094507614800274226981107085929590254185425273559042976171503907943793194842845890835133406885671925681517347731439124039971268535772441389943526257018243714512592593512323296725941627631582840937936230289732464068819395084847503736153991018426601148001171410680610396315398455868476519242523364370643315263903656899707643857165005292144961418736390628879183534554050946402008748537061851428674751948379857099827888766867529291843558247067650218013841320566949128247840292451599528568785840031947044173916230774125850838571273228740235067857273673072775479606479505558411747622879981674961795496398
+1246234818568605038771725387770032809896657624658751197487822667705150496788266236821445252745402061440344837126297118817722352360943422714353348519968257483217425318287123603122559539044278216514618542935008251728016376351207287908907419066172027356649934716661853550169371283110451199593919378518682893908073257597996213276417788967527409800490507319098619694553882580772197585922179030322385772341029003564359719244782484762058530989277184051441547024568631595655539528137422918541855814336215841836541683256179952847812650782272979437883178787135567291812430132598562391722110607279005808604132547633446702754242
+5945807707085423616106397090464145288661224101014907693104654596081518092031824289580553655597136400293583390581989219838293858796303129177903562794487009660324129992480484791256849653177916440709763357317237732026978876936371843211238777064330897077782446698577278202922221650609784909136488983753316374328060041688862833502261386605214386656750469198595184961624056503168436674528338454488445689162595307651649338939926811181397583426347049799471037024928424365956074689363634987714880064366326557578148205795406310315807810873199906864220949509516643869325208494504730147145059516579980994124490343208766447536810
+6187445948828077692015970911804646938282242052772994916845077569070730070453969382819385152870562813549652542234501650247554999118997287612656768657169917874500360552882579507148077964788035519927189184337650311696041346297615679489279371787315665879866086591715868260088943256008041145891355773432381271043597673424658569516927545882320343535771872720945022165744462740208023473214182506701311573606230422976998106293803156552098142853857635121713770388765373265153557740921629496699557717987765469270646934300913295007513219413849883613183601728166411181113787689840581266359785250985019212532583960800460788015491
+5212091418073782411520553214182135709421767268933861097557470068670598830761237108296366132955527825989098372862689616150847719971020880914262684813844505249039731390296288313064277036616294317850242554242344468349017823603991546642546139312359635120516022621977198868713265236780584328968456455227210401242292651898111573896055644196069499504205254423973191477361052269017513569237003435455766967610384127786317357129201800175882818678442257638418605140567086462026872695510406713566416179338847089594383139719544078973639147656333759205784973323451162915648440751084782358602950098354039646328692181357908591122714
+3655638351649160392053613377223998746456935081525685917833104279800461813163792301601632928836306436302774882558931553763046873854372645433876037722220899647761264466458772539363592772806366025160060082392022496959043608616479633871824843539139765269866557324139669669180299880464960812373747543711884223811204173243558307161330834607275612285093379360358536623915157494256701984991891771698584900549732277659667805289723868414345078895913383480318010760628083474820289670382156241646315278789987701943251698483519785588242374214684684812447667402223553085547756490931266818022366894997520489636576763520143455761239
+22473849661397275053996298243554884261414191820929237708168650853330395912319504073426952208513086627198829384154042315234052506082911684608144173835091410795393615116386997884885069683405033389454289189585622646957977150864405507253019700368456175153569120706431504842630017193823414614613515543944012768438615372135192092455771020625920899643657460748140525123446385745452885018242994907719060418829076821951353655094288932417789785658686354925401717179930381179237133075628900875416109603229568575866141143927588631408100548721530988132959911381450682687082674104687988294384311340599275049224252503713916928373410
+1873513506226622659558980965960349556051601818636390593699111238742079235436048735742501009666517921834732172263333584189891447981830661750295791445758897570358691214228971207469306988655891013882209331385427955502522192570359268476079812111160032458293920218131883616683323041237563743943563895577660520218905767619038915659113775800791354119111094458073436219216055603238833113774387249183198627105364934918297190119325269494891789384314242315970885073496066247057106399028140269736234473860608631980241965505615924442715413658175017031374265609800935996459163053296259788980765102199701839555511572730799034774424
+20415066745705913332960559851272168836161858864856687615100156867932858500059203383582659999680270947712850092591947365553338831150848535525568756863490320019679102804007709747313186252161566229585999657772047185972884107522202907260488147758131548047735509416576778951156037782507571965765760567109821746219259712533369530160331404056822935924868818144471996283443950605787104623265573763097577017088633658357190202370173046308936352735690024216178434559387107878752418634566838258964132836294305792991271935081972613859675575909742688564959474926073661839487937083301362266785004789397144843903897244356681794196480
+</code></pre>
+<p>解法：<br>$$c1 \equiv {m^e}\pmod{n1 \cdot n2}$$<br>$$c2 \equiv {m^e}\pmod{n1 \cdot n3}$$<br>$$c3 \equiv {m^e}\pmod{n1 \cdot n4}$$<br>由1-2，3-2得：<br>$${c1-c2} &#x3D; {k1 \cdot n1 \cdot ({n2-n3} )}$$<br>$${c3-c2} &#x3D; {k1 \cdot n1 \cdot ({n4-n3} )}$$<br>这样就得到了一个公因数n1,再随便出一个公因数2就搞定了<br>数字的选择就在里面挑几个就行了，小数被减就ok，别出现负数<br>代码：</p>
+<pre><code class="python">#! usr/bin/python2.7
+#coding=utf-8
+import binascii
+import gmpy2
+def gcd(a, b):
+    if a &lt; b:
+        a, b = b, a
+    while b != 0:
+        temp = a % b
+        a = b
+        b = temp
+    return a
+def egcd(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+def modinv(a, m):
+    g, x, y = egcd(a, m)
+    if g != 1:
+        raise Exception(&#39;modular inverse does not exist&#39;)
+    else:
+        return x % m
+c2 = 1246234818568605038771725387770032809896657624658751197487822667705150496788266236821445252745402061440344837126297118817722352360943422714353348519968257483217425318287123603122559539044278216514618542935008251728016376351207287908907419066172027356649934716661853550169371283110451199593919378518682893908073257597996213276417788967527409800490507319098619694553882580772197585922179030322385772341029003564359719244782484762058530989277184051441547024568631595655539528137422918541855814336215841836541683256179952847812650782272979437883178787135567291812430132598562391722110607279005808604132547633446702754242
+c1 = 13455981172983326464102311937762831661788310626361076786164994487793945326981111197066703467784063584677545316464486222690177319997065759168374653040496712059568682406584202721616582863702654975066950060466986422582257001703187853927809075825528343329091775200012208860563692058684819775698290978617780577594014210672865880497874392738697086445744342656347507587613428993075257255547029724259635931665971785614738909042286207279739603543188892504358133043289264464915763121424437513688474543252743250750837754962444189265768058493217120380229238478428390747580847275659398491959011425398794606200760449574140326761335
+c3 = 4888187708328317620094507614800274226981107085929590254185425273559042976171503907943793194842845890835133406885671925681517347731439124039971268535772441389943526257018243714512592593512323296725941627631582840937936230289732464068819395084847503736153991018426601148001171410680610396315398455868476519242523364370643315263903656899707643857165005292144961418736390628879183534554050946402008748537061851428674751948379857099827888766867529291843558247067650218013841320566949128247840292451599528568785840031947044173916230774125850838571273228740235067857273673072775479606479505558411747622879981674961795496398
+c4 = 5945807707085423616106397090464145288661224101014907693104654596081518092031824289580553655597136400293583390581989219838293858796303129177903562794487009660324129992480484791256849653177916440709763357317237732026978876936371843211238777064330897077782446698577278202922221650609784909136488983753316374328060041688862833502261386605214386656750469198595184961624056503168436674528338454488445689162595307651649338939926811181397583426347049799471037024928424365956074689363634987714880064366326557578148205795406310315807810873199906864220949509516643869325208494504730147145059516579980994124490343208766447536810
+c5 = 6187445948828077692015970911804646938282242052772994916845077569070730070453969382819385152870562813549652542234501650247554999118997287612656768657169917874500360552882579507148077964788035519927189184337650311696041346297615679489279371787315665879866086591715868260088943256008041145891355773432381271043597673424658569516927545882320343535771872720945022165744462740208023473214182506701311573606230422976998106293803156552098142853857635121713770388765373265153557740921629496699557717987765469270646934300913295007513219413849883613183601728166411181113787689840581266359785250985019212532583960800460788015491
+c6 = 5212091418073782411520553214182135709421767268933861097557470068670598830761237108296366132955527825989098372862689616150847719971020880914262684813844505249039731390296288313064277036616294317850242554242344468349017823603991546642546139312359635120516022621977198868713265236780584328968456455227210401242292651898111573896055644196069499504205254423973191477361052269017513569237003435455766967610384127786317357129201800175882818678442257638418605140567086462026872695510406713566416179338847089594383139719544078973639147656333759205784973323451162915648440751084782358602950098354039646328692181357908591122714
+c7 = 3655638351649160392053613377223998746456935081525685917833104279800461813163792301601632928836306436302774882558931553763046873854372645433876037722220899647761264466458772539363592772806366025160060082392022496959043608616479633871824843539139765269866557324139669669180299880464960812373747543711884223811204173243558307161330834607275612285093379360358536623915157494256701984991891771698584900549732277659667805289723868414345078895913383480318010760628083474820289670382156241646315278789987701943251698483519785588242374214684684812447667402223553085547756490931266818022366894997520489636576763520143455761239
+c8 = 22473849661397275053996298243554884261414191820929237708168650853330395912319504073426952208513086627198829384154042315234052506082911684608144173835091410795393615116386997884885069683405033389454289189585622646957977150864405507253019700368456175153569120706431504842630017193823414614613515543944012768438615372135192092455771020625920899643657460748140525123446385745452885018242994907719060418829076821951353655094288932417789785658686354925401717179930381179237133075628900875416109603229568575866141143927588631408100548721530988132959911381450682687082674104687988294384311340599275049224252503713916928373410
+c9 = 1873513506226622659558980965960349556051601818636390593699111238742079235436048735742501009666517921834732172263333584189891447981830661750295791445758897570358691214228971207469306988655891013882209331385427955502522192570359268476079812111160032458293920218131883616683323041237563743943563895577660520218905767619038915659113775800791354119111094458073436219216055603238833113774387249183198627105364934918297190119325269494891789384314242315970885073496066247057106399028140269736234473860608631980241965505615924442715413658175017031374265609800935996459163053296259788980765102199701839555511572730799034774424
+c10= 20415066745705913332960559851272168836161858864856687615100156867932858500059203383582659999680270947712850092591947365553338831150848535525568756863490320019679102804007709747313186252161566229585999657772047185972884107522202907260488147758131548047735509416576778951156037782507571965765760567109821746219259712533369530160331404056822935924868818144471996283443950605787104623265573763097577017088633658357190202370173046308936352735690024216178434559387107878752418634566838258964132836294305792991271935081972613859675575909742688564959474926073661839487937083301362266785004789397144843903897244356681794196480
+p = gmpy2.gcd((c1-c2),(c3-c2))
+q = gmpy2.gcd((c6-c9),(c7-c9))
+c = c1
+n = p*q
+d = modinv(65537,(p-1)*(q-1))
+m = hex(pow(c,d,n))
+flag = m[2:]
+print(binascii.unhexlify(flag))
+</code></pre>
+<p>参考:[Eb0ny]<a target="_blank" rel="noopener" href="https://eb0ny.github.io/2017/09/26/WDCTFfinal-RSA/">https://eb0ny.github.io/2017/09/26/WDCTFfinal-RSA/</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="../../../../about" rel="external nofollow noreferrer">xyzz</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xyzzpwn.top">http://www.xyzzpwn.top</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="../../../../about" target="_blank">xyzz</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="../../../../tags/RSA/">
+                                    <span class="chip bg-color">RSA</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="../../../../libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="../../../../libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="../../19/flow-meter/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/15.jpg" class="responsive-img" alt="Flow meter">
+                        
+                        <span class="card-title">Flow meter</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            All is build in Raspberry Pi 3b
+this is a bash for Raspberry Pi to get a gpio python php mysql and open i2c-0
+
+pi.sh
+#su
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-05-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/iot/" class="post-category">
+                                    iot
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/Raspberrypi/">
+                        <span class="chip bg-color">Raspberrypi</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/19.jpg" class="responsive-img" alt="rsa_combinations">
+                        
+                        <span class="card-title">rsa_combinations</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            15号做的，算是迁移博客后的第一篇吧
+#! /usr/bin/python2.7
+
+from Crypto.Util.number import size,bytes_to_long,getStrongPrime
+from itertool
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-05-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/crypto/" class="post-category">
+                                    crypto
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/RSA/">
+                        <span class="chip bg-color">RSA</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="../../../../libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="../../../../libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('1'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../../../libs/materialize/materialize.min.js"></script>
+    <script src="../../../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../../../libs/aos/aos.js"></script>
+    <script src="../../../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

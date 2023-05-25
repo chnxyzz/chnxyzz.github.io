@@ -1,0 +1,1236 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="rsa_of_ctf_1, algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>rsa_of_ctf_1 | xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/my.css">
+
+    <script src="../../../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="../../../../libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '../../../../index.html';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('../../../../medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">rsa_of_ctf_1</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="../../../../libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="../../../../tags/RSA/">
+                                <span class="chip bg-color">RSA</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="../../../../categories/crypto/" class="post-category">
+                                crypto
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-06-01
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-05-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    11 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>IN CTF,Rsa often appears.BUT in ctf it’s usually with Fixed method to solve it.<br>Today,I put all code to here.</p>
+<span id="more"></span>
+<h1 id="1-have-p-q-e-compute-d-or-p-q-e-c-to-decrypte-ciphertext"><a href="#1-have-p-q-e-compute-d-or-p-q-e-c-to-decrypte-ciphertext" class="headerlink" title="1.have p,q,e.compute d or p,q,e,c to decrypte ciphertext"></a>1.have p,q,e.compute d or p,q,e,c to decrypte ciphertext</h1><p>you should note that e should be a prime number</p>
+<pre><code class="python">def computeD(fn, e):
+    (x, y, r) = extendedGCD(fn, e)
+    #y maybe &lt; 0, so convert it
+    if y &lt; 0:
+        return fn + y
+    return y
+
+def extendedGCD(a, b):
+    #a*xi + b*yi = ri
+    if b == 0:
+        return (1, 0, a)
+    #a*x1 + b*y1 = a
+    x1 = 1
+    y1 = 0
+    #a*x2 + b*y2 = b
+    x2 = 0
+    y2 = 1
+    while b != 0:
+        q = a / b
+        #ri = r(i-2) % r(i-1)
+        r = a % b
+        a = b
+        b = r
+        #xi = x(i-2) - q*x(i-1)
+        x = x1 - q*x2
+        x1 = x2
+        x2 = x
+        #yi = y(i-2) - q*y(i-1)
+        y = y1 - q*y2
+        y1 = y2
+        y2 = y
+    return(x1, y1, a)
+
+c=174351854900966188977904987134427781775272319015132758864873306597577750098226384697676493069934493337172878644704026414143158278061735487156753876228693871133246943987986736376334978394288726798629969739682159093341216933569685433834399066431572596217448890045449452777575588109633903180187737151526697202981068022052927269776042366636567373169048897053407525377739061532954622334926090886616814795353343617608514882733311276797401041432521552887309768062119475432313577704285175154999953744808693060762751860890138121483113217037477525088532442342551435801844941921381421754649633057679452893025326942215634059805893
+e=65537
+p=7
+n=327686759455107101770244900847669909444589048412360834576685246062688127536081099083429267251807434658755027942434088691531411358608813564103474260906760890856572316124720411994944452029909143528618601332276557030331449922914588098651910546381598167047448472663466757577538599646576321101391165156123505615545132362901633176715824845507656500702749953003718520197296421627262166996961876028666789909011002781946123522101211391085819205716356811390841768572223338428099889208616922338336413929957447204562949543074397015746616534379026758490398097163404992258919511999330535101502534548628286576966950951725386015104827
+q=n/7
+
+fn=(p - 1) * (q - 1)
+d = computeD(fn, e)
+print(d)
+m = pow(c, d, n)
+print(hex(m)[2:-1].decode(&#39;hex&#39;))
+</code></pre>
+<h1 id="2-factor-N"><a href="#2-factor-N" class="headerlink" title="2. factor N"></a>2. factor N</h1><p>if n&lt;256bit or n have two close number.yafu and <a target="_blank" rel="noopener" href="https://factordb.com/">foctordb</a> will be very helpful.<br>Note:yafu in windows or in linux is not same.you can try both of them.</p>
+<h1 id="3-Common-Modulus-Attack"><a href="#3-Common-Modulus-Attack" class="headerlink" title="3. Common Modulus Attack"></a>3. Common Modulus Attack</h1><p>if use the same n to encrypt the same m. Common Modulus Attack is useful.</p>
+<pre><code class="python"># coding=utf-8
+import string
+import gmpy
+def egcd(a, b):
+    if a == 0:
+        return b, 0, 1
+    else:
+        g, y, x = egcd(b % a, a)
+        return g, x - b // a * y, y
+def main():
+    c1=3453520592723443935451151545245025864232388871721682326408915024349804062041976702364728660682912396903968193981131553111537349
+    c2=5672818026816293344070119332536629619457163570036305296869053532293105379690793386019065754465292867769521736414170803238309535
+    n = 6266565720726907265997241358331585417095726146341989755538017122981360742813498401533594757088796536341941659691259323065631249
+    e1 = 773
+    e2 = 839
+    s = egcd(e1, e2)
+    s1 = s[1]
+    s2 = s[2]
+ 
+    if s1 &lt; 0:
+        s1 = -s1
+        c1 = gmpy.invert(c1, n)
+    elif s2 &lt; 0:
+        s2 = -s2
+        c2 = gmpy.invert(c2, n)
+ 
+    m = pow(c1, s1, n) * pow(c2, s2, n) % n
+    print(m)
+    print (&#39;try:&#39;,&#39;&#123;:x&#125;&#39;.format(int(m)).decode(&#39;hex&#39;))
+    q=[102,108,97,103,123,119,104,101,110,119,101,116,104,105,110,107,105,116,105,115,112,111,115,115,105,98,108,101,125]
+    s=&quot;&quot;
+    for i in q:
+        s+=chr(int(i))
+    print(s)
+ 
+if __name__ == &#39;__main__&#39;:
+    main()
+</code></pre>
+<h1 id="4-Basic-Broadcast-Attack"><a href="#4-Basic-Broadcast-Attack" class="headerlink" title="4. Basic Broadcast Attack"></a>4. Basic Broadcast Attack</h1><p>use the same e to encrypte the same m.</p>
+<pre><code class="python"># coding:utf8
+from struct import pack,unpack
+import zlib
+import gmpy
+def my_parse_number(number):
+    string = &quot;%x&quot; % number
+    #if len(string) != 64:
+    #    return &quot;&quot;
+    erg = []
+    while string != &#39;&#39;:
+        erg = erg + [chr(int(string[:2], 16))]
+        string = string[2:]
+    return &#39;&#39;.join(erg)
+def extended_gcd(a, b):
+    x,y = 0, 1
+    lastx, lasty = 1, 0
+    while b:
+        a, (q, b) = b, divmod(a,b)
+        x, lastx = lastx-q*x, x
+        y, lasty = lasty-q*y, y
+    return (lastx, lasty, a)
+def chinese_remainder_theorem(items):
+  N = 1
+  for a, n in items:
+    N *= n
+  result = 0
+  for a, n in items:
+    m = N/n
+    r, s, d = extended_gcd(n, m)
+    if d != 1:
+      N=N/n
+      continue
+      #raise &quot;Input not pairwise co-prime&quot;
+    result += a*s*m
+  return result % N, N
+sessions=[&#123;&quot;c&quot;: 7366067574741171461722065133242916080495505913663250330082747465383676893970411476550748394841437418105312353971095003424322679616940371123028982189502042, &quot;e&quot;: 10, &quot;n&quot;: 25162507052339714421839688873734596177751124036723831003300959761137811490715205742941738406548150240861779301784133652165908227917415483137585388986274803&#125;,
+&#123;&quot;c&quot;: 21962825323300469151795920289886886562790942771546858500842179806566435767103803978885148772139305484319688249368999503784441507383476095946258011317951461, &quot;e&quot;: 10, &quot;n&quot;: 23976859589904419798320812097681858652325473791891232710431997202897819580634937070900625213218095330766877190212418023297341732808839488308551126409983193&#125;,
+&#123;&quot;c&quot;: 6569689420274066957835983390583585286570087619048110141187700584193792695235405077811544355169290382357149374107076406086154103351897890793598997687053983, &quot;e&quot;: 10, &quot;n&quot;: 18503782836858540043974558035601654610948915505645219820150251062305120148745545906567548650191832090823482852604346478335353784501076761922605361848703623&#125;,
+&#123;&quot;c&quot;: 4508246168044513518452493882713536390636741541551805821790338973797615971271867248584379813114125478195284692695928668946553625483179633266057122967547052, &quot;e&quot;: 10, &quot;n&quot;: 23383087478545512218713157932934746110721706819077423418060220083657713428503582801909807142802647367994289775015595100541168367083097506193809451365010723&#125;,
+&#123;&quot;c&quot;: 22966105670291282335588843018244161552764486373117942865966904076191122337435542553276743938817686729554714315494818922753880198945897222422137268427611672, &quot;e&quot;: 10, &quot;n&quot;: 31775649089861428671057909076144152870796722528112580479442073365053916012507273433028451755436987054722496057749731758475958301164082755003195632005308493&#125;,
+&#123;&quot;c&quot;: 17963313063405045742968136916219838352135561785389534381262979264585397896844470879023686508540355160998533122970239261072020689217153126649390825646712087, &quot;e&quot;: 10, &quot;n&quot;: 22246342022943432820696190444155665289928378653841172632283227888174495402248633061010615572642126584591103750338919213945646074833823905521643025879053949&#125;,
+&#123;&quot;c&quot;: 1652417534709029450380570653973705320986117679597563873022683140800507482560482948310131540948227797045505390333146191586749269249548168247316404074014639, &quot;e&quot;: 10, &quot;n&quot;: 25395461142670631268156106136028325744393358436617528677967249347353524924655001151849544022201772500033280822372661344352607434738696051779095736547813043&#125;,
+&#123;&quot;c&quot;: 15585771734488351039456631394040497759568679429510619219766191780807675361741859290490732451112648776648126779759368428205194684721516497026290981786239352, &quot;e&quot;: 10, &quot;n&quot;: 32056508892744184901289413287728039891303832311548608141088227876326753674154124775132776928481935378184756756785107540781632570295330486738268173167809047&#125;,
+&#123;&quot;c&quot;: 8965123421637694050044216844523379163347478029124815032832813225050732558524239660648746284884140746788823681886010577342254841014594570067467905682359797, &quot;e&quot;: 10, &quot;n&quot;: 52849766269541827474228189428820648574162539595985395992261649809907435742263020551050064268890333392877173572811691599841253150460219986817964461970736553&#125;,
+&#123;&quot;c&quot;: 13560945756543023008529388108446940847137853038437095244573035888531288577370829065666320069397898394848484847030321018915638381833935580958342719988978247, &quot;e&quot;: 10, &quot;n&quot;: 30415984800307578932946399987559088968355638354344823359397204419191241802721772499486615661699080998502439901585573950889047918537906687840725005496238621&#125;]
+
+data = []
+for session in sessions:
+    e=session[&#39;e&#39;]
+    n=session[&#39;n&#39;]
+    msg=session[&#39;c&#39;]
+    data = data + [(msg, n)]
+print &quot;-&quot; * 80
+print &quot;Please wait, performing CRT&quot;
+x, n = chinese_remainder_theorem(data)
+e=session[&#39;e&#39;]
+realnum = gmpy.mpz(x).root(e)[0].digits()
+print my_parse_number(int(realnum))
+</code></pre>
+<p>tips: usually if e&#x3D;3,choose 3 groups;if e&#x3D;10,choose 7 groups.</p>
+<h1 id="5-use-openssl-to-decrypte"><a href="#5-use-openssl-to-decrypte" class="headerlink" title="5.use openssl to decrypte"></a>5.use openssl to decrypte</h1><h2 id="read-public-pem"><a href="#read-public-pem" class="headerlink" title="read public.pem"></a>read public.pem</h2><p>use openssl</p>
+<pre><code class="bash">openssl rsa -pubin -in pubkey.pem -text -modulus
+</code></pre>
+<p>or use python</p>
+<pre><code class="python">from Crypto.PublicKey import RSA
+with open(&#39;./pubkey.pem&#39;, &#39;r&#39;) as f:
+    key = RSA.importKey(f)
+    n = key.n
+    e = key.e
+</code></pre>
+<h2 id="generate-the-private-pem"><a href="#generate-the-private-pem" class="headerlink" title="generate the private.pem"></a>generate the private.pem</h2><p>we should use rsatools.py</p>
+<pre><code class="python">#!/usr/bin/env python2
+import base64, fractions, optparse, random
+try:
+    import gmpy
+except ImportError as e:
+    try:
+        import gmpy2 as gmpy
+    except ImportError:
+        raise e
+
+from pyasn1.codec.der import encoder
+from pyasn1.type.univ import *
+
+PEM_TEMPLATE = &#39;-----BEGIN RSA PRIVATE KEY-----\n%s-----END RSA PRIVATE KEY-----\n&#39;
+DEFAULT_EXP = 65537
+
+def factor_modulus(n, d, e):
+    &quot;&quot;&quot;
+    Efficiently recover non-trivial factors of n
+    See: Handbook of Applied Cryptography
+    8.2.2 Security of RSA -&gt; (i) Relation to factoring (p.287)
+    http://www.cacr.math.uwaterloo.ca/hac/
+    &quot;&quot;&quot;
+    t = (e * d - 1)
+    s = 0
+
+    while True:
+        quotient, remainder = divmod(t, 2)
+
+        if remainder != 0:
+            break
+
+        s += 1
+        t = quotient
+
+    found = False
+
+    while not found:
+        i = 1
+        a = random.randint(1,n-1)
+
+        while i &lt;= s and not found:
+            c1 = pow(a, pow(2, i-1, n) * t, n)
+            c2 = pow(a, pow(2, i, n) * t, n)
+
+            found = c1 != 1 and c1 != (-1 % n) and c2 == 1
+
+            i += 1
+
+    p = fractions.gcd(c1-1, n)
+    q = (n / p)
+
+    return p, q
+
+class RSA:
+    def __init__(self, p=None, q=None, n=None, d=None, e=DEFAULT_EXP):
+        &quot;&quot;&quot;
+        Initialize RSA instance using primes (p, q)
+        or modulus and private exponent (n, d)
+        &quot;&quot;&quot;
+
+        self.e = e
+
+        if p and q:
+            assert gmpy.is_prime(p), &#39;p is not prime&#39;
+            assert gmpy.is_prime(q), &#39;q is not prime&#39;
+
+            self.p = p
+            self.q = q
+        elif n and d:   
+            self.p, self.q = factor_modulus(n, d, e)
+        else:
+            raise ArgumentError(&#39;Either (p, q) or (n, d) must be provided&#39;)
+
+        self._calc_values()
+
+    def _calc_values(self):
+        self.n = self.p * self.q
+
+        if self.p != self.q:
+            phi = (self.p - 1) * (self.q - 1)
+        else:
+            phi = (self.p ** 2) - self.p
+
+        self.d = gmpy.invert(self.e, phi)
+
+        # CRT-RSA precomputation
+        self.dP = self.d % (self.p - 1)
+        self.dQ = self.d % (self.q - 1)
+        self.qInv = gmpy.invert(self.q, self.p)
+
+    def to_pem(self):
+        &quot;&quot;&quot;
+        Return OpenSSL-compatible PEM encoded key
+        &quot;&quot;&quot;
+        return (PEM_TEMPLATE % base64.encodestring(self.to_der()).decode()).encode()
+
+    def to_der(self):
+        &quot;&quot;&quot;
+        Return parameters as OpenSSL compatible DER encoded key
+        &quot;&quot;&quot;
+        seq = Sequence()
+
+        for x in [0, self.n, self.e, self.d, self.p, self.q, self.dP, self.dQ, self.qInv]:
+            seq.setComponentByPosition(len(seq), Integer(x))
+
+        return encoder.encode(seq)
+
+    def dump(self, verbose):
+        vars = [&#39;n&#39;, &#39;e&#39;, &#39;d&#39;, &#39;p&#39;, &#39;q&#39;]
+
+        if verbose:
+            vars += [&#39;dP&#39;, &#39;dQ&#39;, &#39;qInv&#39;]
+
+        for v in vars:
+            self._dumpvar(v)
+
+    def _dumpvar(self, var):
+        val = getattr(self, var)
+
+        parts = lambda s, l: &#39;\n&#39;.join([s[i:i+l] for i in range(0, len(s), l)])
+
+        if len(str(val)) &lt;= 40:
+            print(&#39;%s = %d (%#x)\n&#39; % (var, val, val))
+        else:
+            print(&#39;%s =&#39; % var)
+            print(parts(&#39;%x&#39; % val, 80) + &#39;\n&#39;)
+
+
+if __name__ == &#39;__main__&#39;:
+    parser = optparse.OptionParser()
+
+    parser.add_option(&#39;-p&#39;, dest=&#39;p&#39;, help=&#39;prime&#39;, type=&#39;int&#39;)
+    parser.add_option(&#39;-q&#39;, dest=&#39;q&#39;, help=&#39;prime&#39;, type=&#39;int&#39;)
+    parser.add_option(&#39;-n&#39;, dest=&#39;n&#39;, help=&#39;modulus&#39;, type=&#39;int&#39;)
+    parser.add_option(&#39;-d&#39;, dest=&#39;d&#39;, help=&#39;private exponent&#39;, type=&#39;int&#39;)
+    parser.add_option(&#39;-e&#39;, dest=&#39;e&#39;, help=&#39;public exponent (default: %d)&#39; % DEFAULT_EXP, type=&#39;int&#39;, default=DEFAULT_EXP)
+    parser.add_option(&#39;-o&#39;, dest=&#39;filename&#39;, help=&#39;output filename&#39;)
+    parser.add_option(&#39;-f&#39;, dest=&#39;format&#39;, help=&#39;output format (DER, PEM) (default: PEM)&#39;, type=&#39;choice&#39;, choices=[&#39;DER&#39;, &#39;PEM&#39;], default=&#39;PEM&#39;)
+    parser.add_option(&#39;-v&#39;, dest=&#39;verbose&#39;, help=&#39;also display CRT-RSA representation&#39;, action=&#39;store_true&#39;, default=False)
+
+    try:
+        (options, args) = parser.parse_args()
+
+        if options.p and options.q:
+            print(&#39;Using (p, q) to initialise RSA instance\n&#39;)
+            rsa = RSA(p=options.p, q=options.q, e=options.e)
+        elif options.n and options.d:
+            print(&#39;Using (n, d) to initialise RSA instance\n&#39;)
+            rsa = RSA(n=options.n, d=options.d, e=options.e)
+        else:
+            parser.print_help()
+            parser.error(&#39;Either (p, q) or (n, d) needs to be specified&#39;)
+
+        rsa.dump(options.verbose)
+
+        if options.filename:
+            print(&#39;Saving %s as %s&#39; % (options.format, options.filename))
+
+
+            if options.format == &#39;PEM&#39;:
+                data = rsa.to_pem()
+            elif options.format == &#39;DER&#39;:
+                data = rsa.to_der()
+
+            fp = open(options.filename, &#39;wb&#39;)
+            fp.write(data)
+            fp.close()
+
+    except optparse.OptionValueError as e:
+        parser.print_help()
+        parser.error(e.msg)
+</code></pre>
+<pre><code class="bash">python rsatools.py -o private.pem -e 65537 -p 285960468890451637935629440372639283459 -q 304008741604601924494328155975272418463
+</code></pre>
+<h2 id="decrypte"><a href="#decrypte" class="headerlink" title="decrypte"></a>decrypte</h2><pre><code class="bash">openssl rsautl -decrypt -in flag.enc -inkey private.pem
+</code></pre>
+<h1 id="6-robin"><a href="#6-robin" class="headerlink" title="6.robin"></a>6.robin</h1><p>e&#x3D;2,it change to robin encryption.<br>tips:factor n,and use the python scripts.</p>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from libnum import n2s,s2n
+from gmpy2 import invert
+n = 0x00b0bee5e3e9e5a7e8d00b493355c618fc8c7d7d03b82e409951c182f398dee3104580e7ba70d383ae5311475656e8a964d380cb157f48c951adfa65db0b122ca40e42fa709189b719a4f0d746e2f6069baf11cebd650f14b93c977352fd13b1eea6d6e1da775502abff89d3a8b3615fd0db49b88a976bc20568489284e181f6f11e270891c8ef80017bad238e363039a458470f1749101bc29949d3a4f4038d463938851579c7525a69984f15b5667f34209b70eb261136947fa123e549dfff00601883afd936fe411e006e4e93d1a00b0fea541bbfc8c5186cb6220503a94b2413110d640c77ea54ba3220fc8f4cc6ce77151e29b3e06578c478bd1bebe04589ef9a197f6f806db8b3ecd826cad24f5324ccdec6e8fead2c2150068602c8dcdc59402ccac9424b790048ccdd9327068095efa010b7f196c74ba8c37b128f9e1411751633f78b7b9e56f71f77a1b4daad3fc54b5e7ef935d9a72fb176759765522b4bbc02e314d5c06b64d5054b7b096c601236e6ccf45b5e611c805d335dbab0c35d226cc208d8ce4736ba39a0354426fae006c7fe52d5267dcfb9c3884f51fddfdf4a9794bcfe0e1557113749e6c8ef421dba263aff68739ce00ed80fd0022ef92d3488f76deb62bdef7bea6026f22a1d25aa2a92d124414a8021fe0c174b9803e6bb5fad75e186a946a17280770f1243f4387446ccceb2222a965cc30b3929L
+def egcd(a, b):
+  if a == 0:
+    return (b, 0, 1)
+  else:
+    g, y, x = egcd(b % a, a)
+    return (g, x - (b // a) * y, y)
+
+c1 = 463861008715592544541788096958649982380822291993552963661158341083846355706002434243934700644973050350312929747219220890560457890313935777592023703351727593419636777359461171339858607119280562005428366329387881166391098115609145938874628114686795611562877497053809598457912418305834273787716982828673966892511281860557783258533261018387471625613663795007228658816252387085466650755883925526958541825222104147849869543037051564421185564554779540328456839232497404387290624286751566497788567952632360610202764706896626948910002870580127130312643007535939055701346777869816192299596023048076518131526912498284229673371086451392093044296762919642063285989747843447863750040049168164995180248537696839181948713195802142440769355170646676213720809021239439003677117223691298857042248760498034349423407473670451239334072146014950322552189012974940288556937727948167308597745265347385839657632044783493614334001410069910239130566741665106961136354024810810762895951475543242485783800975807492277070656820419568903493214148024889196426647826970230572261314165620636524851460205285978154492707641609544222797219280033396022038053564505730709726626191701076448925166798629160333223816800919504603549706970069896984937227311709903117484219056513
+c2 = 195927128375915404159831782462849519421997168919281192367229155964060692077108973872052067093830637435252224973106403590960932515038799457446882667747435423710065935543543844413331083110324200262663792099201343806708421236272615410153800048782940883675292129942393866266808892179233016046998828763505477208746508926921965388801062981929590402046412505111940482772986190133625714699124188164875578090687811453005795224867122919491454673337692814426115843867664958620407645606387890667138977076727434377908888216522129550500939598401247647451284377783348961677038054513371331912131036588363741320174543932216775500758772806202930724606218837813090150058942140302970078470023234601410850114012056651579503201865188078915561504282163872927300515159998426449361756610452381205386016234990077066797140322333463064165598646284901334076981455665261664866944699135608136052568226611778555151714388687630634120924870097471977570019937467642561549382597187489391364324926276292677979682469604330880184704070172829714637547167378168252389633223108429705879462848460071858533428563787744545008456341542179870964497696809334435217174394915252063444720170993440241479128761827816861630516781632778764274272389367661890340952041792122059256233164391
+
+c2 = invert(c2,n)
+e1 = 17
+e2 = 65537
+s = egcd(e1,e2)
+s1 = s[1]
+s2 = s[2]
+s2 = - s2
+m = pow(c1, s1, n) * pow(c2, s2, n) % n
+print n2s(m)
+</code></pre>
+<h1 id="7-cube-root"><a href="#7-cube-root" class="headerlink" title="7.cube root"></a>7.cube root</h1><p>if e&#x3D;3,and n is very big,try it.</p>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from libnum import s2n,n2s
+from gmpy2 import iroot
+n = 0xB0BEE5E3E9E5A7E8D00B493355C618FC8C7D7D03B82E409951C182F398DEE3104580E7BA70D383AE5311475656E8A964D380CB157F48C951ADFA65DB0B122CA40E42FA709189B719A4F0D746E2F6069BAF11CEBD650F14B93C977352FD13B1EEA6D6E1DA775502ABFF89D3A8B3615FD0DB49B88A976BC20568489284E181F6F11E270891C8EF80017BAD238E363039A458470F1749101BC29949D3A4F4038D463938851579C7525A69984F15B5667F34209B70EB261136947FA123E549DFFF00601883AFD936FE411E006E4E93D1A00B0FEA541BBFC8C5186CB6220503A94B2413110D640C77EA54BA3220FC8F4CC6CE77151E29B3E06578C478BD1BEBE04589EF9A197F6F806DB8B3ECD826CAD24F5324CCDEC6E8FEAD2C2150068602C8DCDC59402CCAC9424B790048CCDD9327068095EFA010B7F196C74BA8C37B128F9E1411751633F78B7B9E56F71F77A1B4DAAD3FC54B5E7EF935D9A72FB176759765522B4BBC02E314D5C06B64D5054B7B096C601236E6CCF45B5E611C805D335DBAB0C35D226CC208D8CE4736BA39A0354426FAE006C7FE52D5267DCFB9C3884F51FDDFDF4A9794BCFE0E1557113749E6C8EF421DBA263AFF68739CE00ED80FD0022EF92D3488F76DEB62BDEF7BEA6026F22A1D25AA2A92D124414A8021FE0C174B9803E6BB5FAD75E186A946A17280770F1243F4387446CCCEB2222A965CC30B3929
+e = 3
+c = 545666236924510340010249577709750283325731706774285241719627277546281629429734726717293022303311450772262647904537263500252284243393598944613964442974546950954108203106726282255676706429218187217515454665602130999856741523362906632677988245886500953095201122016935004088287862399317170828388632964668574391252399791901016522260191839164586088073933168096433230663402492577707149742261018318811473591856287943664733276898405984282679026758294364432874973387827086342720762945025346962005339728347282927842299962927871005260338747371451546554777112213044710533502191671159066680035742327279159127279685106716107705888068319962657817786581813767331740609788885735155741039564703781141646102609725965697004923161084032164730408824475517786576979990372940555488021025837456038491436690372760376483602299268887032528766383572923258228355911069631275397149328319966792315903921085816103476508992023873616148326626245855060470294978538631677232260545724075728912626994884533001056079733734460116442499311813113038763837974777469202302071221647473459505245546281400799833123812072606012604323510933244028733287443734697557314202167934768160824072400916728008549350662843995750077421616789178835625661267955774815287104291379928002318796086248
+i = 1
+while 1:
+    res = iroot(c+i*n,3)
+    if(res[1] == True):
+        print res
+        break
+    if i%10000==0:
+        print &quot;i=&quot;+str(i)
+    i = i+1
+m = res[0]
+print(n2s(m))
+</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="../../../../about" rel="external nofollow noreferrer">xyzz</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xyzzpwn.top">http://www.xyzzpwn.top</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="../../../../about" target="_blank">xyzz</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="../../../../tags/RSA/">
+                                    <span class="chip bg-color">RSA</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="../../../../libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="../../../../libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="../../03/rsa-of-ctf-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/9.jpg" class="responsive-img" alt="rsa-of-ctf-2">
+                        
+                        <span class="card-title">rsa-of-ctf-2</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            8.gcd(n1,n2)Sometimes,n1 n2 are too big to factor.you can try gcd(n1,n2)
+
+def gcd(a, b):
+    if a &lt; b:
+        a, b =
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-06-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/crypto/" class="post-category">
+                                    crypto
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/RSA/">
+                        <span class="chip bg-color">RSA</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="../../../05/22/ngrok-esxi-pfsense/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/18.jpg" class="responsive-img" alt="ngrok+esxi+pfsense">
+                        
+                        <span class="card-title">ngrok+esxi+pfsense</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            With a thinking,try to make a cloud environment to do my job,that i can use a chromebook for a whole day work.for this,I
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-05-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/trick/" class="post-category">
+                                    trick
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/Esxi/">
+                        <span class="chip bg-color">Esxi</span>
+                    </a>
+                    
+                    <a href="../../../../tags/ngrok/">
+                        <span class="chip bg-color">ngrok</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="../../../../libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="../../../../libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('1'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../../../libs/materialize/materialize.min.js"></script>
+    <script src="../../../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../../../libs/aos/aos.js"></script>
+    <script src="../../../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

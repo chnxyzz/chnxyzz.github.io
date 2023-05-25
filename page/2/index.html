@@ -1,0 +1,1057 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../css/my.css">
+
+    <script src="../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                welcome
+                
+            </div>
+
+            <div class="description center-align">
+                
+                <span id="subtitle"></span>
+                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                <script>
+                    var typed = new Typed("#subtitle", {
+                        strings: ['只想睡觉觉','only want to sleep'],
+                        startDelay: 300,
+                        typeSpeed: 100,
+                        loop: true,
+                        backSpeed: 50,
+                        showCursor: true
+                    });
+                </script>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // 每天切换 banner 图.  Switch banner image every day.
+    var bannerUrl = "../../medias/banner/" + new Date().getDay() + '.jpg';
+    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+</script>
+
+
+    </div>
+</div>
+
+
+<main class="content">
+
+    
+
+    
+
+    <!-- 所有文章卡片 -->
+    <article id="articles" class="container articles">
+        <div class="row article-row">
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2021/01/13/qq-kong-jian-pi-liang-shan-chu-dai-ma/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/14.jpg" class="responsive-img" alt="qq空间批量删除代码">
+                            
+                            <span class="card-title">qq空间批量删除代码</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介对于qq空间批量删除日志和相册的代码直接抄网上日志的，自己改改
+日志
+(async () =&gt; &#123;
+    let frameDocument = document.querySelector(&#39;.app_can
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-13
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/trick/" class="post-category">
+                                    trick
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/QQ%E7%A9%BA%E9%97%B4/">
+                            <span class="chip bg-color">QQ空间</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/12/30/win10-2004-quan-ruan-jian-mo-ban/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/16.jpg" class="responsive-img" alt="win10_2004全软件模版">
+                            
+                            <span class="card-title">win10_2004全软件模版</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介关于win10下使用的软件等全功能模版机子使用的软件的大全
+开发IDE
+vscode
+visual studio
+sublime text
+JetBrains GoLand
+JetBrains CLion
+JetBrains Pycha
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/devops/" class="post-category">
+                                    devops
+                                </a>
+                                
+                                <a href="../../categories/frequent/" class="post-category">
+                                    frequent
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Template/">
+                            <span class="chip bg-color">Template</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/12/27/linux-xia-wen-jian-xi-tong-cao-zuo-zheng-he/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/5.jpg" class="responsive-img" alt="linux下文件系统操作整合">
+                            
+                            <span class="card-title">linux下文件系统操作整合</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介linux下对于文件系统的操作的一些集合
+开机挂载文件查看Linux硬盘信息：sudo fdisk -l 
+
+格式化硬盘sudo mkfs.ext4 /dev/sdb
+
+创建&#x2F;data目录sudo mkdir /data
+
+挂
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/frequent/" class="post-category">
+                                    frequent
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Filesystem/">
+                            <span class="chip bg-color">Filesystem</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/12/10/syscall-table/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/7.jpg" class="responsive-img" alt="syscall table">
+                            
+                            <span class="card-title">syscall table</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介linux syscall table
+x64
+
+
+%rax
+Name
+Entry point
+Implementation
+
+
+
+0
+read
+sys_read
+fs&#x2F;read_write.c
+
+
+1
+write
+sys_w
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-10
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/bin/" class="post-category">
+                                    bin
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Base/">
+                            <span class="chip bg-color">Base</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/10/26/python3-guan-yu-angr-de-an-zhuang/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/18.jpg" class="responsive-img" alt="python3关于angr的安装">
+                            
+                            <span class="card-title">python3关于angr的安装</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介在debian10.6上安装angr
+
+python&#x3D;3.7
+debian&#x3D;10.6
+
+开始安装安装依赖sudo apt-get install python3-dev libffi-dev build-essent
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-26
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/bin/" class="post-category">
+                                    bin
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/angr/">
+                            <span class="chip bg-color">angr</span>
+                        </a>
+                        
+                        <a href="../../tags/python3/">
+                            <span class="chip bg-color">python3</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/10/19/guan-yu-python-huan-jing-de-bian-li-cao-zuo/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/22.jpg" class="responsive-img" alt="关于python环境的便利操作">
+                            
+                            <span class="card-title">关于python环境的便利操作</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介关于linux下python环境还是conda使用的方便，所以对于conda进行一个常用的配置
+配置conda源cat &gt; ~/.condarc &lt;&lt; EOF
+channels:
+  - defaults
+show_c
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/trick/" class="post-category">
+                                    trick
+                                </a>
+                                
+                                <a href="../../categories/devops/" class="post-category">
+                                    devops
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/python/">
+                            <span class="chip bg-color">python</span>
+                        </a>
+                        
+                        <a href="../../tags/conda/">
+                            <span class="chip bg-color">conda</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/10/17/safari-guan-yu-bu-an-quan-lian-jie-de-jie-jue-ban-fa/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/3.jpg" class="responsive-img" alt="safari关于不安全链接的解决办法">
+                            
+                            <span class="card-title">safari关于不安全链接的解决办法</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介换了vsphere和esxi后，系统证书需要重新生效，发现chrome很好搞定vsphere，能用不安全的链接登陆esxi。safari是可以登陆vsphere不能打开esxi。这里记录了修复的过程
+过程
+首先在keyschains里面
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-17
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/repair/" class="post-category">
+                                    repair
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/safari/">
+                            <span class="chip bg-color">safari</span>
+                        </a>
+                        
+                        <a href="../../tags/https/">
+                            <span class="chip bg-color">https</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/10/10/debian10-guan-yu-dhcp-renew-shi-bai-de-xiu-fu/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/14.jpg" class="responsive-img" alt="debian10关于dhcp renew失败的修复">
+                            
+                            <span class="card-title">debian10关于dhcp renew失败的修复</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介更换了新的宿主机之后，发现debian的dhcp 在renew的环节中会出现问题以下是修复方案
+dhclient进程系统的dhclient进程命令为
+/sbin/dhclient -4 -v -i -pf /run/dhclient.e
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-10
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/repair/" class="post-category">
+                                    repair
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Debian10/">
+                            <span class="chip bg-color">Debian10</span>
+                        </a>
+                        
+                        <a href="../../tags/Esxi/">
+                            <span class="chip bg-color">Esxi</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/09/29/shu-mei-pai-zi-kong-feng-shan/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/14.jpg" class="responsive-img" alt="树莓派自控风扇">
+                            
+                            <span class="card-title">树莓派自控风扇</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介树莓派4b的自控风扇
+主要信息系统: Debian-Pi-Aarch64 2020-06-22-v2020-2.0-U4-Release BaseOS Plus++三极管：S8050 NPN连接线：杜邦线公对母，母对母
+连接方式风扇正极
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-29
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/iot/" class="post-category">
+                                    iot
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Raspberrypi/">
+                            <span class="chip bg-color">Raspberrypi</span>
+                        </a>
+                        
+                        <a href="../../tags/Fans/">
+                            <span class="chip bg-color">Fans</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/09/28/esxi-qian-yi-xu-ni-ji/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/12.jpg" class="responsive-img" alt="esxi迁移虚拟机">
+                            
+                            <span class="card-title">esxi迁移虚拟机</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介原来的esxi进行淘汰处理，需要将里面数据迁移出来，等新的服务器到了迁移过去esxi: 122t raid6备份机器: 7t hdd新esxi：82t raid6
+虚拟机先发现资源池和vm
+ovftool vi://root:&#123
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/virtualization/" class="post-category">
+                                    virtualization
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Esxi/">
+                            <span class="chip bg-color">Esxi</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/09/14/linux-kernel-hook/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/18.jpg" class="responsive-img" alt="linux kernel hook">
+                            
+                            <span class="card-title">linux kernel hook</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介好久都没搞linux的kernel了，记录一下
+MakefileCONFIG_MODULE_SIG=n
+obj-m += hook_test.o
+all:
+    make -C /lib/modules/$(shell uname -
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/bin/" class="post-category">
+                                    bin
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/kernel/">
+                            <span class="chip bg-color">kernel</span>
+                        </a>
+                        
+                        <a href="../../tags/hook/">
+                            <span class="chip bg-color">hook</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="../../2020/09/10/ubuntu-bian-yi-an-zhuang-qemu/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="../../medias/featureimages/10.jpg" class="responsive-img" alt="ubuntu编译安装qemu">
+                            
+                            <span class="card-title">ubuntu编译安装qemu</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                简介通过ubuntu编译安装qemu
+
+ubuntu20.04.1
+qemu v5.1.50
+
+源码https://github.com/qemu/qemu.git
+
+安装依赖apt-get install -y htop gcc g++ 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-10
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="../../categories/virtualization/" class="post-category">
+                                    virtualization
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="../../tags/Qemu/">
+                            <span class="chip bg-color">Qemu</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </article>
+
+</main>
+
+
+<div class="container paging">
+    <div class="row">
+        <div class="col s6 m4 l4">
+            
+            <a href="../../"
+               class="left btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            
+        </div>
+        <div class="page-info col m4 l4 hide-on-small-only">
+            <div class="center-align b-text-gray">2 / 5</div>
+        </div>
+        <div class="col s6 m4 l4">
+            
+            <a href="../3/"
+               class="right btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../libs/materialize/materialize.min.js"></script>
+    <script src="../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../libs/aos/aos.js"></script>
+    <script src="../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

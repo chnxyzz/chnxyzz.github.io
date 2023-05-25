@@ -1,0 +1,946 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="ngrok+esxi+pfsense, algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>ngrok+esxi+pfsense | xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/my.css">
+
+    <script src="../../../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="../../../../libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '../../../../index.html';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('../../../../medias/featureimages/18.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">ngrok+esxi+pfsense</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="../../../../libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="../../../../tags/Esxi/">
+                                <span class="chip bg-color">Esxi</span>
+                            </a>
+                        
+                            <a href="../../../../tags/ngrok/">
+                                <span class="chip bg-color">ngrok</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="../../../../categories/trick/" class="post-category">
+                                trick
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-05-22
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-05-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>With a thinking,try to make a cloud environment to do my job,that i can use a chromebook for a whole day work.<br>for this,I try to split a 48h128g server to some small server,like windows,kali,centos…<br>there is some question i met</p>
+<blockquote>
+<p>1.I only have 2 IP,how to make all computer can connected the internat<br>2.The server is in Intranet,how can I connected it,it’s better have a high speed<br>3.How can i keep my safe</p>
+</blockquote>
+<span id="more"></span>
+
+<p>There is the answer for me to deal it</p>
+<blockquote>
+<p>1.use a Soft router to build a NAT,the two ip ,one give to ESXI server ,other give to router.All server by split from ESXI connect to soft route.In this,I choose pfSense<br>2.this is not a different question.It’s easy to use teamviewer,but i don’t want to use it,for one it’s not stable,it’s usually disconneted for 5 min.other is in sometime,it is very slow.<br>3.All things is make by myself,the server for Reverse proxy server is build in docker.If someone use docker Escape loophole,I recognized.Just del the vps,change it.</p>
+</blockquote>
+<p>Start</p>
+<h1 id="Soft-router"><a href="#Soft-router" class="headerlink" title="Soft router"></a>Soft router</h1><p>There is a lot of router to choose,just like PFsense,Routeros,Sophos,Untangle.<br>I select the pfSense-CE-2.4.0-RELEASE-amd64</p>
+<h2 id="download-the-ova-file"><a href="#download-the-ova-file" class="headerlink" title="download the ova file"></a>download the ova file</h2><p>I use <code>pfSense-CE-2.4.0-RELEASE-amd64.ova</code></p>
+<h2 id="Deploy-it"><a href="#Deploy-it" class="headerlink" title="Deploy it"></a>Deploy it</h2><p>In ESXI,deploy the template.You can change the router Configuration,I make it 4h4g.<br><img src="/img/2018/05/23/soft_router_configuration.png" alt="soft_router_configuration"></p>
+<p>you can set it in shell or in web(you should make a computer connected in the nat)<br><img src="/img/2018/05/23/soft_router_shell_setting.png" alt="soft_router_shell_setting"><br><img src="/img/2018/05/23/soft_router_web_setting.png" alt="soft_router_web_setting"></p>
+<h2 id="setting-DNS-in-computer"><a href="#setting-DNS-in-computer" class="headerlink" title="setting DNS in computer"></a>setting DNS in computer</h2><p>I’m sad,beacuse i can’t solve it,I want to make the DNS in router,but failed.</p>
+<h1 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h1><p>The way to connected should use Reverse proxy,I use ngork.</p>
+<h2 id="update-and-install-docker"><a href="#update-and-install-docker" class="headerlink" title="update and install docker"></a>update and install docker</h2><pre><code>sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install docker.io
+</code></pre>
+<p>the other useful command for install docker</p>
+<pre><code>yum install docker-ce
+yum install docker-io
+sudo apt-get install docker.ce
+</code></pre>
+<h2 id="pull-docker-images"><a href="#pull-docker-images" class="headerlink" title="pull docker images"></a>pull docker images</h2><p>I choose <code>docker pull hteen/ngrok</code><br>build it</p>
+<pre><code>docker run --rm -it -e DOMAIN=&quot;&lt; your domain &gt;&quot; -v /data/ngrok:/myfiles hteen/ngrok /bin/sh /build.sh
+</code></pre>
+<p>if you see <code>build ok !</code>,it’s ok,if error,sometimes may be your vps is not support docker.<br><img src="/img/2018/05/23/ngork_budilok.png" alt="ngork_budilok"></p>
+<h2 id="start-docker-images"><a href="#start-docker-images" class="headerlink" title="start docker images"></a>start docker images</h2><p>if you only want to proxy the http or https.You can just use </p>
+<pre><code>docker run -idt --name ngrok-server -v /data/ngrok:/myfiles -p 80:80 -p 443:443 -p 4443:4443 -e DOMAIN=&#39;&lt; your domain &gt;&#39; hteen/ngrok /bin/sh /server.sh
+</code></pre>
+<p>if you want to proxy ssh or rdp.You should open more ports.<br>just like</p>
+<pre><code>docker run -idt --name ngrok-server -v /data/ngrok:/myfiles -p 80:80 -p 443:443 -p 4443:4443 -p 50001:50001 -p 50002:50002 -p 50003:50003 -p 50004:50004 -p 50005:50005 -p 50006:50006 -p 50007:50007 -p 50008:50008 -p 50009:50009 -p 50010:50010 -p 50011:50011 -p 50012:50012 -p 50013:50013 -p 50014:50014 -p 50015:50015 -p 50016:50016 -p 50017:50017 -p 50018:50018 -p 50019:50019 -p 50020:50020 -p 50021:50021 -p 50022:50022 -p 50023:50023 -p 50024:50024 -p 50025:50025 -p 50026:50026 -p 50027:50027 -p 50028:50028 -p 50029:50029 -p 50030:50030 -p 50031:50031 -p 50032:50032 -p 50033:50033 -p 50034:50034 -p 50035:50035 -p 50036:50036 -p 50037:50037 -p 50038:50038 -p 50039:50039 -p 50040:50040 -p 50041:50041 -p 50042:50042 -p 50043:50043 -p 50044:50044 -p 50045:50045 -p 50046:50046 -p 50047:50047 -p 50048:50048 -p 50049:50049 -p 50050:50050 -p 50051:50051 -p 50052:50052 -p 50053:50053 -p 50054:50054 -p 50055:50055 -p 50056:50056 -p 50057:50057 -p 50058:50058 -p 50059:50059 -p 50060:50060 -p 50061:50061 -p 50062:50062 -p 50063:50063 -p 50064:50064 -p 50065:50065 -p 50066:50066 -p 50067:50067 -p 50068:50068 -p 50069:50069 -p 50070:50070 -p 50071:50071 -p 50072:50072 -p 50073:50073 -p 50074:50074 -p 50075:50075 -p 50076:50076 -p 50077:50077 -p 50078:50078 -p 50079:50079 -p 50080:50080 -p 50081:50081 -p 50082:50082 -p 50083:50083 -p 50084:50084 -p 50085:50085 -p 50086:50086 -p 50087:50087 -p 50088:50088 -p 50089:50089 -p 50090:50090 -p 50091:50091 -p 50092:50092 -p 50093:50093 -p 50094:50094 -p 50095:50095 -p 50096:50096 -p 50097:50097 -p 50098:50098 -p 50099:50099 -p 50100:50100 -e DOMAIN=&#39;&lt; your domain &gt;&#39; hteen/ngrok /bin/sh /server.sh
+</code></pre>
+<p>it’s too fool,you can use other to replace it</p>
+<pre><code>docker run -idt --name ngrok-server -v /data/ngrok:/myfiles -p 80:80 -p 443:443 -p 4443:4443 -p 50000-50200:50000-50200 -e DOMAIN=&#39;&lt; your domain &gt;&#39; hteen/ngrok /bin/sh /server.sh
+</code></pre>
+<p>there is something you should be notice.The ports number can’t be too much,I try to open 10000 ports,1000ports,all failed.In the end,I choose 200.</p>
+<h2 id="And-a-dns"><a href="#And-a-dns" class="headerlink" title="And a dns"></a>And a dns</h2><p>in your Domain provider to add two records.<br><img src="/img/2018/05/23/dns1.png" alt="dns1"><br><img src="/img/2018/05/23/dns2.png" alt="dns2"></p>
+<h1 id="USE-mstsc"><a href="#USE-mstsc" class="headerlink" title="USE mstsc"></a>USE mstsc</h1><p>In step 2,we will find a folder bin in &#x2F;data&#x2F;ngork&#x2F;,those are the program to connect to our server.<br>Download them and choose what fit your OS<br>there are linux_x64,win_x64<br>for other,you should use there commands</p>
+<pre><code>sudo GOOS=windowsGOARCH=i386 make release-server release-client
+sudo GOOS=darwin GOARCH=i386 make release-server release-client
+</code></pre>
+<p>create a file named <code>ngork.cfg</code></p>
+<pre><code>server_addr: &quot;&lt; your domain &gt;:4443&quot;
+trust_host_root_certs: false
+tunnels:
+    ssh:
+       remote_port: 50001
+       proto:
+         tcp: &quot;127.0.0.1:22&quot;
+    mstsc:
+        remote_port: 50002
+        proto:
+         tcp: &quot;127.0.0.2:3389&quot;
+    web:
+     subdomain: &quot;web&quot;
+     proto:
+       http: 80
+</code></pre>
+<p>there are two way to use:</p>
+<h3 id="fit-for-web"><a href="#fit-for-web" class="headerlink" title="fit for web:"></a>fit for web:</h3><pre><code>#Linux:
+./ngrok -config ./ngrok.cfg -subdomain wechat ip:80
+
+#Windows:
+ngrok -config ./ngrok.cfg -subdomain wechat ip:80
+</code></pre>
+<p>it is easy to assign the domain,BUT !!! it’t can’t be used in tcp</p>
+<h3 id="other"><a href="#other" class="headerlink" title="other"></a>other</h3><pre><code>#win
+ngrok -config ngrok.cfg start mstsc
+
+#linux
+./ngrok -config ngrok.cfg start ssh
+</code></pre>
+<p>maybe you should see,in mstsc,I use <code>127.0.0.2</code> and in ssh I use <code>127.0.0.1</code></p>
+<p>the reason for it is we can’t mstsc 127.0.0.1 when is os higher than winxp,but we can use 127.0.0.2,127.0.0.3….<br>but linux can ssh 127.0.0.1<br><img src="/img/2018/05/23/mstsc_error.png" alt="mstsc_error"></p>
+<p>The other thing for ngork is add a user,and add it to mstsc groud.Modify the max connections for rdp.In the end,<br>use ngork start the program and mstsc the computer.</p>
+<p><img src="/img/2018/05/23/mstsc_add.png" alt="mstsc_add"><br><img src="/img/2018/05/23/mstsc_addtogroup.png" alt="mstsc_addtogroup"><br><img src="/img/2018/05/23/mstsc_modify.png" alt="mstsc_modify"><br><img src="/img/2018/05/23/mstsc_modify_connections.png" alt="mstsc_modify_connections"></p>
+<p>Go!Than I can use the ESXI anywhere with out school vpn.</p>
+<h3 id="add"><a href="#add" class="headerlink" title="add"></a>add</h3><pre><code class="bash">nohup ngrok -log=stdout 80 &gt; /dev/null &amp;
+</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="../../../../about" rel="external nofollow noreferrer">xyzz</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xyzzpwn.top">http://www.xyzzpwn.top</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="../../../../about" target="_blank">xyzz</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="../../../../tags/Esxi/">
+                                    <span class="chip bg-color">Esxi</span>
+                                </a>
+                            
+                                <a href="../../../../tags/ngrok/">
+                                    <span class="chip bg-color">ngrok</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="../../../../libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="../../../../libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="../../../06/01/rsa-of-ctf-1/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/10.jpg" class="responsive-img" alt="rsa_of_ctf_1">
+                        
+                        <span class="card-title">rsa_of_ctf_1</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            IN CTF,Rsa often appears.BUT in ctf it’s usually with Fixed method to solve it.Today,I put all code to here.
+
+1.have p,q
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-06-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/crypto/" class="post-category">
+                                    crypto
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/RSA/">
+                        <span class="chip bg-color">RSA</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="../../20/cve-2018-1111/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/5.jpg" class="responsive-img" alt="cve-2018-1111">
+                        
+                        <span class="card-title">cve-2018-1111</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Recently, Red Hat has released a security update that fixes a remote code execution flaw numbered CVE-2018-1111. An atta
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-05-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/bin/" class="post-category">
+                                    bin
+                                </a>
+                            
+                            <a href="../../../../categories/cve/" class="post-category">
+                                    cve
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/DNS/">
+                        <span class="chip bg-color">DNS</span>
+                    </a>
+                    
+                    <a href="../../../../tags/RCE/">
+                        <span class="chip bg-color">RCE</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="../../../../libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="../../../../libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('1'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../../../libs/materialize/materialize.min.js"></script>
+    <script src="../../../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../../../libs/aos/aos.js"></script>
+    <script src="../../../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

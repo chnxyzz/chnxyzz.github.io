@@ -1,0 +1,1397 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="rsa-of-ctf-2, algorithm,web,re,pwn,crypto,deeplearning">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>rsa-of-ctf-2 | xyzz&#39;Blog</title>
+    <link rel="icon" type="image/png" href="../../../../favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../../../../libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/matery.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/my.css">
+
+    <script src="../../../../libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="../../../../index.html" class="waves-effect waves-light">
+                    
+                    <img src="../../../../headimage.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">xyzz&#39;Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../index.html" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../tags/" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../categories/" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="../../../../archives/" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="../../../../headimage.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">xyzz&#39;Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../index.html" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../tags/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../categories/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="../../../../archives/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="../../../../libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '../../../../index.html';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('../../../../medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">rsa-of-ctf-2</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="../../../../libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="../../../../tags/RSA/">
+                                <span class="chip bg-color">RSA</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="../../../../categories/crypto/" class="post-category">
+                                crypto
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-06-03
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-05-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    17 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="8-gcd-n1-n2"><a href="#8-gcd-n1-n2" class="headerlink" title="8.gcd(n1,n2)"></a>8.gcd(n1,n2)</h1><p>Sometimes,n1 n2 are too big to factor.you can try gcd(n1,n2)</p>
+<span id="more"></span>
+<pre><code class="python">def gcd(a, b):
+    if a &lt; b:
+        a, b = b, a
+
+    while b != 0:
+        temp = a % b
+        a = b
+        b = temp
+
+    return a
+def computeD(fn, e):
+    (x, y, r) = extendedGCD(fn, e)
+    #y maybe &lt; 0, so convert it
+    if y &lt; 0:
+        return fn + y
+    return y
+
+def extendedGCD(a, b):
+    #a*xi + b*yi = ri
+    if b == 0:
+        return (1, 0, a)
+    #a*x1 + b*y1 = a
+    x1 = 1
+    y1 = 0
+    #a*x2 + b*y2 = b
+    x2 = 0
+    y2 = 1
+    while b != 0:
+        q = a / b
+        #ri = r(i-2) % r(i-1)
+        r = a % b
+        a = b
+        b = r
+        #xi = x(i-2) - q*x(i-1)
+        x = x1 - q*x2
+        x1 = x2
+        x2 = x
+        #yi = y(i-2) - q*y(i-1)
+        y = y1 - q*y2
+        y1 = y2
+        y2 = y
+    return(x1, y1, a)
+
+n1 = 28989197955870674811941817152881961892555962828020048566215146047714999804743571465320756664500939106612607504133407755470924915037883788416084924998195415611009578161228226056524027626453567996030151847302248848345942762209886902216532270655286303624781479379460319335849225128417295447574269158603952744753408534894136230960676590980945838733350143370605144754932401806068003166087495356366335014736018745371974324955357717635855207674309628146381030418983172039685916675081977078212813718313201568394044637347955108623458947913411108888733982376607647705302281273170230540579872437433435253235534772724624778056181
+n2 = 29703811006265969568420235185761287243393105045336995893094671661145408859269297497044834735198371987472186770953203812235003929122122129964989222762478116003185582578013431109127657242169359697936471497781547555222392181694624446976869099519331688628488881595076878345856808384797954271081176432330698334469596003760530797898645529616535584139559768170011693043197581376652770244664582733792825511473683193195672487559140733668442863818306947800631472845430628311685792799840854080385208783178691512540436222290062939858472754953657763052720510548438848633979413756332920634307585878271699119574149435107725143578613
+c1=14200655400630956617529154837540349350095534430543196299987252783320359338882400858000649938298574946882176873795065987640380185922571487987903069796872680567596754211592988768630729844485795253975027297563832927176988502771266530781452168489731952873297707254669904609865565861351429459102567318447934677565870915603816516557032164955329497823771897899211076176905132170360842951444390670253036307048815943908305457043184642918674003085039564350070641592716116089015861491205237748561298604957423077954850396167621218521884114394431799317165818964438359695744604198246716410783223931430682808151056020475306791729591
+e=0x10001
+
+p = gcd(n1,n2)
+q=n1/p
+fn=(p - 1) * (q - 1)
+d = computeD(fn, e)
+m=pow(c1,d,n1)
+print(hex(m)[2:-1].decode(&#39;hex&#39;))
+</code></pre>
+<h1 id="9-rsa-combinations"><a href="#9-rsa-combinations" class="headerlink" title="9.rsa_combinations"></a>9.rsa_combinations</h1><p>deforce rsa………!!!!</p>
+<pre><code class="python">#! /usr/bin/python2.7
+
+from Crypto.Util.number import size,bytes_to_long,getStrongPrime
+from itertools import combinations
+
+msg = bytes_to_long(&quot;Your secret flag is : flag&#123;**************************&#125;&quot;)
+e = 65537
+pri = []
+
+f = open(&#39;cipherx.txt&#39;, &#39;w&#39;)
+
+for i in range(5):
+    pri.append(getStrongPrime(1024,65537))
+print(&#39;pri&#39;,pri)
+for k in combinations(pri, 2):
+    n = k[0] * k[1]
+    print k[0],k[1]
+    f.write(str(pow(msg, e, n)) + &#39;\n&#39;)
+</code></pre>
+<p>solve.py</p>
+<pre><code class="python">#! usr/bin/python2.7
+#coding=utf-8
+import binascii
+import gmpy2
+def gcd(a, b):
+    if a &lt; b:
+        a, b = b, a
+    while b != 0:
+        temp = a % b
+        a = b
+        b = temp
+    return a
+def egcd(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+def modinv(a, m):
+    g, x, y = egcd(a, m)
+    if g != 1:
+        raise Exception(&#39;modular inverse does not exist&#39;)
+    else:
+        return x % m
+c2 = 1246234818568605038771725387770032809896657624658751197487822667705150496788266236821445252745402061440344837126297118817722352360943422714353348519968257483217425318287123603122559539044278216514618542935008251728016376351207287908907419066172027356649934716661853550169371283110451199593919378518682893908073257597996213276417788967527409800490507319098619694553882580772197585922179030322385772341029003564359719244782484762058530989277184051441547024568631595655539528137422918541855814336215841836541683256179952847812650782272979437883178787135567291812430132598562391722110607279005808604132547633446702754242
+c1 = 13455981172983326464102311937762831661788310626361076786164994487793945326981111197066703467784063584677545316464486222690177319997065759168374653040496712059568682406584202721616582863702654975066950060466986422582257001703187853927809075825528343329091775200012208860563692058684819775698290978617780577594014210672865880497874392738697086445744342656347507587613428993075257255547029724259635931665971785614738909042286207279739603543188892504358133043289264464915763121424437513688474543252743250750837754962444189265768058493217120380229238478428390747580847275659398491959011425398794606200760449574140326761335
+c3 = 4888187708328317620094507614800274226981107085929590254185425273559042976171503907943793194842845890835133406885671925681517347731439124039971268535772441389943526257018243714512592593512323296725941627631582840937936230289732464068819395084847503736153991018426601148001171410680610396315398455868476519242523364370643315263903656899707643857165005292144961418736390628879183534554050946402008748537061851428674751948379857099827888766867529291843558247067650218013841320566949128247840292451599528568785840031947044173916230774125850838571273228740235067857273673072775479606479505558411747622879981674961795496398
+c4 = 5945807707085423616106397090464145288661224101014907693104654596081518092031824289580553655597136400293583390581989219838293858796303129177903562794487009660324129992480484791256849653177916440709763357317237732026978876936371843211238777064330897077782446698577278202922221650609784909136488983753316374328060041688862833502261386605214386656750469198595184961624056503168436674528338454488445689162595307651649338939926811181397583426347049799471037024928424365956074689363634987714880064366326557578148205795406310315807810873199906864220949509516643869325208494504730147145059516579980994124490343208766447536810
+c5 = 6187445948828077692015970911804646938282242052772994916845077569070730070453969382819385152870562813549652542234501650247554999118997287612656768657169917874500360552882579507148077964788035519927189184337650311696041346297615679489279371787315665879866086591715868260088943256008041145891355773432381271043597673424658569516927545882320343535771872720945022165744462740208023473214182506701311573606230422976998106293803156552098142853857635121713770388765373265153557740921629496699557717987765469270646934300913295007513219413849883613183601728166411181113787689840581266359785250985019212532583960800460788015491
+c6 = 5212091418073782411520553214182135709421767268933861097557470068670598830761237108296366132955527825989098372862689616150847719971020880914262684813844505249039731390296288313064277036616294317850242554242344468349017823603991546642546139312359635120516022621977198868713265236780584328968456455227210401242292651898111573896055644196069499504205254423973191477361052269017513569237003435455766967610384127786317357129201800175882818678442257638418605140567086462026872695510406713566416179338847089594383139719544078973639147656333759205784973323451162915648440751084782358602950098354039646328692181357908591122714
+c7 = 3655638351649160392053613377223998746456935081525685917833104279800461813163792301601632928836306436302774882558931553763046873854372645433876037722220899647761264466458772539363592772806366025160060082392022496959043608616479633871824843539139765269866557324139669669180299880464960812373747543711884223811204173243558307161330834607275612285093379360358536623915157494256701984991891771698584900549732277659667805289723868414345078895913383480318010760628083474820289670382156241646315278789987701943251698483519785588242374214684684812447667402223553085547756490931266818022366894997520489636576763520143455761239
+c8 = 22473849661397275053996298243554884261414191820929237708168650853330395912319504073426952208513086627198829384154042315234052506082911684608144173835091410795393615116386997884885069683405033389454289189585622646957977150864405507253019700368456175153569120706431504842630017193823414614613515543944012768438615372135192092455771020625920899643657460748140525123446385745452885018242994907719060418829076821951353655094288932417789785658686354925401717179930381179237133075628900875416109603229568575866141143927588631408100548721530988132959911381450682687082674104687988294384311340599275049224252503713916928373410
+c9 = 1873513506226622659558980965960349556051601818636390593699111238742079235436048735742501009666517921834732172263333584189891447981830661750295791445758897570358691214228971207469306988655891013882209331385427955502522192570359268476079812111160032458293920218131883616683323041237563743943563895577660520218905767619038915659113775800791354119111094458073436219216055603238833113774387249183198627105364934918297190119325269494891789384314242315970885073496066247057106399028140269736234473860608631980241965505615924442715413658175017031374265609800935996459163053296259788980765102199701839555511572730799034774424
+c10= 20415066745705913332960559851272168836161858864856687615100156867932858500059203383582659999680270947712850092591947365553338831150848535525568756863490320019679102804007709747313186252161566229585999657772047185972884107522202907260488147758131548047735509416576778951156037782507571965765760567109821746219259712533369530160331404056822935924868818144471996283443950605787104623265573763097577017088633658357190202370173046308936352735690024216178434559387107878752418634566838258964132836294305792991271935081972613859675575909742688564959474926073661839487937083301362266785004789397144843903897244356681794196480
+p = gmpy2.gcd((c1-c2),(c3-c2))
+q = gmpy2.gcd((c6-c9),(c7-c9))
+c = c1
+n = p*q
+d = modinv(65537,(p-1)*(q-1))
+m = hex(pow(c,d,n))
+flag = m[2:]
+print(binascii.unhexlify(flag))
+</code></pre>
+<h1 id="10-rsa-blast"><a href="#10-rsa-blast" class="headerlink" title="10.rsa blast"></a>10.rsa blast</h1><p>generally with other encryption algorithm,and can blast by bits.<br>question.py</p>
+<pre><code class="python"># import signal
+
+n = 0xBACA954B2835186EEE1DAC2EF38D7E11582127FB9E6107CCAFE854AE311C07ACDE3AAC8F0226E1435D53F03DC9CE6701CF9407C77CA9EE8B5C0DEE300B11DD4D6DC33AC50CA9628A7FB3928943F90738BF6F5EC39F786D1E6AD565EB6E0F1F92ED3227658FDC7C3AE0D4017941E1D5B27DB0F12AE1B54664FD820736235DA626F0D6F97859E5969902088538CF70A0E8B833CE1896AE91FB62852422B8C29941903A6CF4A70DF2ACA1D5161E01CECFE3AD80041B2EE0ACEAA69C793D6DCCC408519A8C718148CF897ACB24FADD8485588B50F39BCC0BBF2BF7AD56A51CB3963F1EB83D2159E715C773A1CB5ACC05B95D2253EEFC3CCC1083A5EF279AF06BB92F
+e = 0x10001
+
+def pad(s):
+    s += (256 - len(s)) * chr(256 - len(s))
+    ret = [&#39;\x00&#39; for _ in range(256)]
+    for index, pos in enumerate(s_box):
+        ret[pos] = s[index]
+    return &#39;&#39;.join(ret)
+
+def unpad(s):
+    ret = [&#39;\x00&#39; for _ in range(256)]
+    for index, pos in enumerate(invs_box):
+        ret[pos] = s[index]
+    return &#39;&#39;.join(ret[0:-ord(ret[-1])])
+
+def str2int(s):
+    return int(s.encode(&#39;hex&#39;), 16)
+
+s_box = [
+    0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
+    0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
+    0xB7, 0xFD, 0x93, 0x26, 0x36, 0x3F, 0xF7, 0xCC, 0x34, 0xA5, 0xE5, 0xF1, 0x71, 0xD8, 0x31, 0x15,
+    0x04, 0xC7, 0x23, 0xC3, 0x18, 0x96, 0x05, 0x9A, 0x07, 0x12, 0x80, 0xE2, 0xEB, 0x27, 0xB2, 0x75,
+    0x09, 0x83, 0x2C, 0x1A, 0x1B, 0x6E, 0x5A, 0xA0, 0x52, 0x3B, 0xD6, 0xB3, 0x29, 0xE3, 0x2F, 0x84,
+    0x53, 0xD1, 0x00, 0xED, 0x20, 0xFC, 0xB1, 0x5B, 0x6A, 0xCB, 0xBE, 0x39, 0x4A, 0x4C, 0x58, 0xCF,
+    0xD0, 0xEF, 0xAA, 0xFB, 0x43, 0x4D, 0x33, 0x85, 0x45, 0xF9, 0x02, 0x7F, 0x50, 0x3C, 0x9F, 0xA8,
+    0x51, 0xA3, 0x40, 0x8F, 0x92, 0x9D, 0x38, 0xF5, 0xBC, 0xB6, 0xDA, 0x21, 0x10, 0xFF, 0xF3, 0xD2,
+    0xCD, 0x0C, 0x13, 0xEC, 0x5F, 0x97, 0x44, 0x17, 0xC4, 0xA7, 0x7E, 0x3D, 0x64, 0x5D, 0x19, 0x73,
+    0x60, 0x81, 0x4F, 0xDC, 0x22, 0x2A, 0x90, 0x88, 0x46, 0xEE, 0xB8, 0x14, 0xDE, 0x5E, 0x0B, 0xDB,
+    0xE0, 0x32, 0x3A, 0x0A, 0x49, 0x06, 0x24, 0x5C, 0xC2, 0xD3, 0xAC, 0x62, 0x91, 0x95, 0xE4, 0x79,
+    0xE7, 0xC8, 0x37, 0x6D, 0x8D, 0xD5, 0x4E, 0xA9, 0x6C, 0x56, 0xF4, 0xEA, 0x65, 0x7A, 0xAE, 0x08,
+    0xBA, 0x78, 0x25, 0x2E, 0x1C, 0xA6, 0xB4, 0xC6, 0xE8, 0xDD, 0x74, 0x1F, 0x4B, 0xBD, 0x8B, 0x8A,
+    0x70, 0x3E, 0xB5, 0x66, 0x48, 0x03, 0xF6, 0x0E, 0x61, 0x35, 0x57, 0xB9, 0x86, 0xC1, 0x1D, 0x9E,
+    0xE1, 0xF8, 0x98, 0x11, 0x69, 0xD9, 0x8E, 0x94, 0x9B, 0x1E, 0x87, 0xE9, 0xCE, 0x55, 0x28, 0xDF,
+    0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
+]
+
+invs_box = [
+    0x52, 0x09, 0x6A, 0xD5, 0x30, 0x36, 0xA5, 0x38, 0xBF, 0x40, 0xA3, 0x9E, 0x81, 0xF3, 0xD7, 0xFB,
+    0x7C, 0xE3, 0x39, 0x82, 0x9B, 0x2F, 0xFF, 0x87, 0x34, 0x8E, 0x43, 0x44, 0xC4, 0xDE, 0xE9, 0xCB,
+    0x54, 0x7B, 0x94, 0x32, 0xA6, 0xC2, 0x23, 0x3D, 0xEE, 0x4C, 0x95, 0x0B, 0x42, 0xFA, 0xC3, 0x4E,
+    0x08, 0x2E, 0xA1, 0x66, 0x28, 0xD9, 0x24, 0xB2, 0x76, 0x5B, 0xA2, 0x49, 0x6D, 0x8B, 0xD1, 0x25,
+    0x72, 0xF8, 0xF6, 0x64, 0x86, 0x68, 0x98, 0x16, 0xD4, 0xA4, 0x5C, 0xCC, 0x5D, 0x65, 0xB6, 0x92,
+    0x6C, 0x70, 0x48, 0x50, 0xFD, 0xED, 0xB9, 0xDA, 0x5E, 0x15, 0x46, 0x57, 0xA7, 0x8D, 0x9D, 0x84,
+    0x90, 0xD8, 0xAB, 0x00, 0x8C, 0xBC, 0xD3, 0x0A, 0xF7, 0xE4, 0x58, 0x05, 0xB8, 0xB3, 0x45, 0x06,
+    0xD0, 0x2C, 0x1E, 0x8F, 0xCA, 0x3F, 0x0F, 0x02, 0xC1, 0xAF, 0xBD, 0x03, 0x01, 0x13, 0x8A, 0x6B,
+    0x3A, 0x91, 0x11, 0x41, 0x4F, 0x67, 0xDC, 0xEA, 0x97, 0xF2, 0xCF, 0xCE, 0xF0, 0xB4, 0xE6, 0x73,
+    0x96, 0xAC, 0x74, 0x22, 0xE7, 0xAD, 0x35, 0x85, 0xE2, 0xF9, 0x37, 0xE8, 0x1C, 0x75, 0xDF, 0x6E,
+    0x47, 0xF1, 0x1A, 0x71, 0x1D, 0x29, 0xC5, 0x89, 0x6F, 0xB7, 0x62, 0x0E, 0xAA, 0x18, 0xBE, 0x1B,
+    0xFC, 0x56, 0x3E, 0x4B, 0xC6, 0xD2, 0x79, 0x20, 0x9A, 0xDB, 0xC0, 0xFE, 0x78, 0xCD, 0x5A, 0xF4,
+    0x1F, 0xDD, 0xA8, 0x33, 0x88, 0x07, 0xC7, 0x31, 0xB1, 0x12, 0x10, 0x59, 0x27, 0x80, 0xEC, 0x5F,
+    0x60, 0x51, 0x7F, 0xA9, 0x19, 0xB5, 0x4A, 0x0D, 0x2D, 0xE5, 0x7A, 0x9F, 0x93, 0xC9, 0x9C, 0xEF,
+    0xA0, 0xE0, 0x3B, 0x4D, 0xAE, 0x2A, 0xF5, 0xB0, 0xC8, 0xEB, 0xBB, 0x3C, 0x83, 0x53, 0x99, 0x61,
+    0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D
+]
+
+def mul(x, y, z):
+    ret = 1
+    while y != 0:
+        if y &amp; 1 != 0:
+            ret = (ret * x) % z
+        x = (x * x) % z
+        y &gt;&gt;= 1
+    return ret
+
+def welcom():
+    # signal.alarm(5)
+    print r&quot;&quot;&quot;
+ ____  ____    _      ______   ______ _____ _____ __  __ 
+|  _ \/ ___|  / \    / ___\ \ / / ___|_   _| ____|  \/  |
+| |_) \___ \ / _ \   \___ \\ V /\___ \ | | |  _| | |\/| |
+|  _ &lt; ___) / ___ \   ___) || |  ___) || | | |___| |  | |
+|_| \_\____/_/   \_\ |____/ |_| |____/ |_| |_____|_|  |_|
+&quot;&quot;&quot;
+
+def main():
+    welcom()
+    flag = open(&#39;./flag&#39;, &#39;r&#39;).read()
+    flag_len = len(flag)
+    assert(flag_len == 38)
+    flag = pad(flag)
+    while True:
+        print &#39;&#39;&#39;
+1. sign flag
+2. get signed flag
+Please give me your choice :&#39;&#39;&#39;
+        cmd = raw_input()
+        if cmd == &#39;1&#39;:
+            assert(len(flag) == 256)
+            flag = unpad(flag)[:flag_len] + raw_input(&#39;Please sign your flag (0 - %d): &#39; % (256 - flag_len))
+            assert(len(flag) &lt;= 256)
+            flag = pad(flag)
+            print &#39;Success&#39;
+
+        elif cmd == &#39;2&#39;:
+            signature = mul(str2int(flag), e, n)
+            print &#39;Your signed flag ciphertext is : 0x%x&#39; % signature
+
+        else:
+            print &#39;Bye bye&#39;
+            exit(0)
+
+if __name__ == &#39;__main__&#39;:
+    main()
+</code></pre>
+<p>solve.py</p>
+<pre><code class="python">#encoding=utf-8
+from pwn import *
+from time import sleep
+# context.log_level=&#39;debug&#39;
+ip=&#39;123.59.138.211&#39;
+# ip=&#39;127.0.0.1&#39;
+ppp=[99, 124, 119, 123, 242, 107, 111, 197, 48, 1, 103, 43, 254, 215, 171, 118, 202, 130, 201, 125, 250, 89, 71, 240, 173, 212, 162, 175, 156, 164, 114, 192, 183, 253, 147, 38, 54, 63]
+n = 0xBACA954B2835186EEE1DAC2EF38D7E11582127FB9E6107CCAFE854AE311C07ACDE3AAC8F0226E1435D53F03DC9CE6701CF9407C77CA9EE8B5C0DEE300B11DD4D6DC33AC50CA9628A7FB3928943F90738BF6F5EC39F786D1E6AD565EB6E0F1F92ED3227658FDC7C3AE0D4017941E1D5B27DB0F12AE1B54664FD820736235DA626F0D6F97859E5969902088538CF70A0E8B833CE1896AE91FB62852422B8C29941903A6CF4A70DF2ACA1D5161E01CECFE3AD80041B2EE0ACEAA69C793D6DCCC408519A8C718148CF897ACB24FADD8485588B50F39BCC0BBF2BF7AD56A51CB3963F1EB83D2159E715C773A1CB5ACC05B95D2253EEFC3CCC1083A5EF279AF06BB92F
+e = 0x10001
+
+def str2int(s):
+    return int(s.encode(&#39;hex&#39;), 16)
+
+def s1(fff):
+    p.recvuntil(&#39;choice :\n&#39;)
+    p.sendline(&#39;1&#39;)
+    p.recvuntil(&#39;):&#39;)
+    p.sendline(fff) 
+
+def s2():
+    p.recvuntil(&#39;choice :\n&#39;)
+    p.sendline(&#39;2&#39;)
+    p.recvuntil(&#39;is : &#39;)
+    t=p.recvline()
+    # print(&#39;t&#39;,t.replace(&#39;\n&#39;,&#39;&#39;))
+    return t
+
+flag=&quot;f&quot;    
+for i in range(2,39):
+    p=remote(ip, 23333)
+    # p.interactive()
+    s1(chr(256-i)*218)
+    s1(&#39;&#39;)
+    c=s2()
+    m=[chr(256-i) for tm in range(256)]
+    for l in range(len(flag)):
+        m[ppp[l]]=flag[l]
+    for jj in range(0,256):
+        m[ppp[i-1]]=chr(jj)
+        kkk=&quot;&quot;
+        for mm in m:
+            kkk+=mm
+        kkk=str2int(kkk)
+        if(pow(kkk,e,n)==int(c,16)):
+            flag+=chr(jj)
+            print(flag)
+            break
+    p.close()
+</code></pre>
+<ol start="11">
+<li>haved knowed high bits of Plaintext<br>with e&#x3D;3,you can use Coppersmith theorem to find it with a log(n) algorithm.<br>you should use it in sage.(in sage cloud is ok)</li>
+</ol>
+<pre><code class="python">import time
+debug = True
+
+# display matrix picture with 0 and X
+def matrix_overview(BB, bound):
+    for ii in range(BB.dimensions()[0]):
+        a = (&#39;%02d &#39; % ii)
+        for jj in range(BB.dimensions()[1]):
+            a += &#39;0&#39; if BB[ii,jj] == 0 else &#39;X&#39;
+            a += &#39; &#39;
+        if BB[ii, ii] &gt;= bound:
+            a += &#39;~&#39;
+        print a
+
+def coppersmith_howgrave_univariate(pol, modulus, beta, mm, tt, XX):
+    &quot;&quot;&quot;
+    Coppersmith revisited by Howgrave-Graham
+
+    finds a solution if:
+    * b|modulus, b &gt;= modulus^beta , 0 &lt; beta &lt;= 1
+    * |x| &lt; XX
+    &quot;&quot;&quot;
+    #
+    # init
+    #
+    dd = pol.degree()
+    nn = dd * mm + tt
+
+    #
+    # checks
+    #
+    if not 0 &lt; beta &lt;= 1:
+        raise ValueError(&quot;beta should belongs in (0, 1]&quot;)
+
+    if not pol.is_monic():
+        raise ArithmeticError(&quot;Polynomial must be monic.&quot;)
+
+    #
+    # calculate bounds and display them
+    #
+    &quot;&quot;&quot;
+    * we want to find g(x) such that ||g(xX)|| &lt;= b^m / sqrt(n)
+
+    * we know LLL will give us a short vector v such that:
+    ||v|| &lt;= 2^((n - 1)/4) * det(L)^(1/n)
+
+    * we will use that vector as a coefficient vector for our g(x)
+
+    * so we want to satisfy:
+    2^((n - 1)/4) * det(L)^(1/n) &lt; N^(beta*m) / sqrt(n)
+
+    so we can obtain ||v|| &lt; N^(beta*m) / sqrt(n) &lt;= b^m / sqrt(n)
+    (it&#39;s important to use N because we might not know b)
+    &quot;&quot;&quot;
+    if debug:
+        # t optimized?
+        print &quot;\n# Optimized t?\n&quot;
+        print &quot;we want X^(n-1) &lt; N^(beta*m) so that each vector is helpful&quot;
+        cond1 = RR(XX^(nn-1))
+        print &quot;* X^(n-1) = &quot;, cond1
+        cond2 = pow(modulus, beta*mm)
+        print &quot;* N^(beta*m) = &quot;, cond2
+        print &quot;* X^(n-1) &lt; N^(beta*m) \n-&gt; GOOD&quot; if cond1 &lt; cond2 else &quot;* X^(n-1) &gt;= N^(beta*m) \n-&gt; NOT GOOD&quot;
+
+        # bound for X
+        print &quot;\n# X bound respected?\n&quot;
+        print &quot;we want X &lt;= N^(((2*beta*m)/(n-1)) - ((delta*m*(m+1))/(n*(n-1)))) / 2 = M&quot;
+        print &quot;* X =&quot;, XX
+        cond2 = RR(modulus^(((2*beta*mm)/(nn-1)) - ((dd*mm*(mm+1))/(nn*(nn-1)))) / 2)
+        print &quot;* M =&quot;, cond2
+        print &quot;* X &lt;= M \n-&gt; GOOD&quot; if XX &lt;= cond2 else &quot;* X &gt; M \n-&gt; NOT GOOD&quot;
+
+        # solution possible?
+        print &quot;\n# Solutions possible?\n&quot;
+        detL = RR(modulus^(dd * mm * (mm + 1) / 2) * XX^(nn * (nn - 1) / 2))
+        print &quot;we can find a solution if 2^((n - 1)/4) * det(L)^(1/n) &lt; N^(beta*m) / sqrt(n)&quot;
+        cond1 = RR(2^((nn - 1)/4) * detL^(1/nn))
+        print &quot;* 2^((n - 1)/4) * det(L)^(1/n) = &quot;, cond1
+        cond2 = RR(modulus^(beta*mm) / sqrt(nn))
+        print &quot;* N^(beta*m) / sqrt(n) = &quot;, cond2
+        print &quot;* 2^((n - 1)/4) * det(L)^(1/n) &lt; N^(beta*m) / sqrt(n) \n-&gt; SOLUTION WILL BE FOUND&quot; if cond1 &lt; cond2 else &quot;* 2^((n - 1)/4) * det(L)^(1/n) &gt;= N^(beta*m) / sqroot(n) \n-&gt; NO SOLUTIONS MIGHT BE FOUND (but we never know)&quot;
+
+        # warning about X
+        print &quot;\n# Note that no solutions will be found _for sure_ if you don&#39;t respect:\n* |root| &lt; X \n* b &gt;= modulus^beta\n&quot;
+
+    #
+    # Coppersmith revisited algo for univariate
+    #
+
+    # change ring of pol and x
+    polZ = pol.change_ring(ZZ)
+    x = polZ.parent().gen()
+
+    # compute polynomials
+    gg = []
+    for ii in range(mm):
+        for jj in range(dd):
+            gg.append((x * XX)**jj * modulus**(mm - ii) * polZ(x * XX)**ii)
+    for ii in range(tt):
+        gg.append((x * XX)**ii * polZ(x * XX)**mm)
+
+    # construct lattice B
+    BB = Matrix(ZZ, nn)
+
+    for ii in range(nn):
+        for jj in range(ii+1):
+            BB[ii, jj] = gg[ii][jj]
+
+    # display basis matrix
+    if debug:
+        matrix_overview(BB, modulus^mm)
+
+    # LLL
+    BB = BB.LLL()
+
+    # transform shortest vector in polynomial
+    new_pol = 0
+    for ii in range(nn):
+        new_pol += x**ii * BB[0, ii] / XX**ii
+
+    # factor polynomial
+    potential_roots = new_pol.roots()
+    print &quot;potential roots:&quot;, potential_roots
+
+    # test roots
+    roots = []
+    for root in potential_roots:
+        if root[0].is_integer():
+            result = polZ(ZZ(root[0]))
+            if gcd(modulus, result) &gt;= modulus^beta:
+                roots.append(ZZ(root[0]))
+
+    #
+    return roots
+
+############################################
+# Test on Stereotyped Messages
+##########################################
+
+print &quot;//////////////////////////////////&quot;
+print &quot;// TEST 1&quot;
+print &quot;////////////////////////////////&quot;
+
+# RSA gen options (for the demo)
+length_N = 1024  # size of the modulus
+Kbits = 512      # size of the root
+e = 3
+
+# RSA gen (for the demo)
+
+N=0x79982a272b9f50b2c2bc8b862ccc617bb39720a6dc1a22dc909bbfd1243cc0a03dd406ec0b1a78fa75ce5234e8c57e0aab492050906364353b06ccd45f90b7818b04be4734eeb8e859ef92a306be105d32108a3165f96664ac1e00bba770f04627da05c3d7513f5882b2807746090cebbf74cd50c0128559a2cc9fa7d88f7b2d
+ZmodN = Zmod(N);
+
+# Create problem (for the demo)
+K = ZZ.random_element(0, 2^Kbits)
+Kdigits = K.digits(2)
+M = [0]*Kbits + [1]*(length_N-Kbits);
+for i in range(len(Kdigits)):
+    M[i] = Kdigits[i]
+M = ZZ(M, 2)
+C=0x381db081852c92d268b49a1b9486d724e4ecf49fc97dc5f20d1fad902b5cdfb49c8cc1e968e36f65ae9af7e8186f15ccdca798786669a3d2c9fe8767a7ae938a4f9115ae8fed4928d95ad550fddd3a9c1497785c9e2279edf43f04601980aa28b3b52afb55e2b34e5b175af25d5b3bd71db88b3b31e48a177a469116d957592c
+b=0xfedcba98765432100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+# Problem to equation (default)
+P.&lt;x&gt; = PolynomialRing(ZmodN) #, implementation=&#39;NTL&#39;)
+pol = (b + x)^e - C
+dd = pol.degree()
+
+# Tweak those
+beta = 1                                # b = N
+epsilon = beta / 7                      # &lt;= beta / 7
+mm = ceil(beta**2 / (dd * epsilon))     # optimized value
+tt = floor(dd * mm * ((1/beta) - 1))    # optimized value
+XX = ceil(N**((beta**2/dd) - epsilon))  # optimized value
+
+# Coppersmith
+start_time = time.time()
+roots = coppersmith_howgrave_univariate(pol, N, beta, mm, tt, XX)
+
+# output
+print &quot;\n# Solutions&quot;
+print &quot;we want to find:&quot;,str(K)
+print &quot;we found:&quot;, str(roots)
+print(&quot;in: %s seconds &quot; % (time.time() - start_time))
+print &quot;\n&quot;
+</code></pre>
+<h1 id="12-wiener-attack"><a href="#12-wiener-attack" class="headerlink" title="12.wiener attack"></a>12.wiener attack</h1><p>if e looks very big.the d may very small.<br>wiener is best to deal it.<br><a target="_blank" rel="noopener" href="https://github.com/pablocelayes/rsa-wiener-attack">wiener attack</a></p>
+<h1 id="13-Boneh-Durfee-Method"><a href="#13-Boneh-Durfee-Method" class="headerlink" title="13.Boneh Durfee Method"></a>13.Boneh Durfee Method</h1><p>if $ d \leq { N ^ 0.292 } $<br>waiting …..</p>
+<h1 id="14-choose-cipher-attack"><a href="#14-choose-cipher-attack" class="headerlink" title="14.choose cipher attack"></a>14.choose cipher attack</h1><p>alice : m,n,e,c<br>bob : p,q,d,e</p>
+<p>alice give c to bob<br>but we attack it.<br>we choose a and a need gcd(a,n)&#x3D;&#x3D;1.<br>computer y&#x3D;(c * pow(a,e,n))%n</p>
+<pre><code class="python">import gmpy2
+e=3
+d=76049878755826336166698139456670360823402717889604969895349508344800412770121957624523975279069318035733764051730593939133424845912466592703373981870874751299015095128705553078747239081130209768910810258649166320353848933996042110730355149970574587323408350943779715053374237240149786382572122316303550059037311599492982439109580656235437909296003096272288705370676044110102935615857801394460044326948435774452489727128000706767789005786209476060332099626876494991496861201654482133245707868426039793944745637143823027996364278711920669753886683794052292533067458821708034433961163807255826762446204313797046780518947
+N=114074818133739504250047209185005541235104076834407454843024262517200619155182936436785962918603977053600646077595890908700137268868699889055060972806312126948522642693058329618120858621695314653366215387973749480530773400994063166095532724955861880985112526415669572580061355860224679573858183474455325088556643994673345465994162610420723170253345262031304174343327749668957998269532265104735742501097132399909676529715137398930849255495327761212026819673358330120772259339210848101393790624794141497382162858696771273350710124735773784422786465775396114824753700050260926501450377050949467981761553058188615697572753
+r=234523452
+M=int(&#39;flag&#123;test_for_cca&#125;&#39;.encode(&#39;hex&#39;),16)
+
+cipher=pow(M,e,N)
+print &#39;Initial cipher:\t&#39;,cipher
+
+cipher_dash = (cipher * pow(r,e,N)) % N
+print &#39;Eve gets Bob to decipher:\t&#39;,cipher_dash
+
+# cipher_dash=90511031607784830273878497072346123546679455256898204196402641372333492940234358009499271727755472553207867386254653658733724900948880219984215792979665435989733167788337042506336114726850208031943574244260983595450232099102339183752672009132355515013239721171582732831124336428650165790015071038470233163029309771817779975903409021754911379543318740006147263912863780000070643964489448504069333128038084002549074569589992574916389850594000510506164205174491002424884037866223779862414707858447048555823073520047145522373211382098608293593800755101294502576108329124664271831858488981525137002348725042733161552081766
+decipher = pow(cipher_dash,d,N)
+
+print &#39;Bob says that the result is wrong:&#39;,decipher
+print &#39;Eve determines as:&#39;,hex(decipher/r)[2:-1].decode(&#39;hex&#39;)
+</code></pre>
+<h1 id="15-e-is-not-prime-number"><a href="#15-e-is-not-prime-number" class="headerlink" title="15.e is not prime number"></a>15.e is not prime number</h1><p>if e is not prime number.use next two scripts.</p>
+<p>solve1.py</p>
+<pre><code class="python">#-*- coding:utf-8 -*-
+from Crypto.Util.number import *
+import sympy
+def gcd(a,b):
+ if a &lt; b:
+    a,b = b,a
+ while b != 0:
+     tem = a % b
+     a = b
+     b = tem
+ return a
+def invalidExponent(p,q,e,c):
+ phiN = (p - 1) * (q - 1)
+ n = p * q
+ GCD = gcd(e, phiN)
+ if (GCD == 1):
+    return &quot;Public exponent is valid.....&quot;
+ d = inverse(e//GCD,phiN)
+ c = pow(c, d, n)
+ plaintext = sympy.root(c, GCD)
+ plaintext = long_to_bytes(plaintext)
+ return plaintext
+
+def main():
+ p =111052706592359766492182549474994387389169491981939276489132990221393430874991652628482505832745103981784837665110819809096264457329836670397000634684595709283710756727662219358743235400779394350023790569023369287367240988429777113514012101219956479046699448481988253039282406274512111898037689623723478951613
+ q =146182161315365079136034892629243958871460254472263352847680359868694597466935352294806409849433942550149005978761759458977642785950171998444382137410141550212657953776734166481126376675282041461924529145282451064083351825934453414726557476469773468589060088164379979035597652907191236468744400214917268039573
+ e = 200
+ c =7797067792814175554801975939092864905908878472965854967525218347636721153564161093453344819975650594936628697646242713415817737235328825333281389820202851500260665233910426103904874575463134970160306453553794787674331367563821223358610113031883172742577264334021835304931484604571485957116313097395143177603380107508691261081725629713443494783479897404175199621026515502716868988672289887933681890547568860707175288422275073767747544353536862473367590288531216644146154729962448906402712219657000812226637887827912541098992158458173920228864293993030475885461755767069329678218760943185942331149777258713727459739405
+ plaintext = invalidExponent(p,q,e,c)
+ print plaintext
+main()
+</code></pre>
+<p>solve2.py</p>
+<pre><code class="python">import gmpy2
+p =111052706592359766492182549474994387389169491981939276489132990221393430874991652628482505832745103981784837665110819809096264457329836670397000634684595709283710756727662219358743235400779394350023790569023369287367240988429777113514012101219956479046699448481988253039282406274512111898037689623723478951613
+q =146182161315365079136034892629243958871460254472263352847680359868694597466935352294806409849433942550149005978761759458977642785950171998444382137410141550212657953776734166481126376675282041461924529145282451064083351825934453414726557476469773468589060088164379979035597652907191236468744400214917268039573
+e = 200
+c =7797067792814175554801975939092864905908878472965854967525218347636721153564161093453344819975650594936628697646242713415817737235328825333281389820202851500260665233910426103904874575463134970160306453553794787674331367563821223358610113031883172742577264334021835304931484604571485957116313097395143177603380107508691261081725629713443494783479897404175199621026515502716868988672289887933681890547568860707175288422275073767747544353536862473367590288531216644146154729962448906402712219657000812226637887827912541098992158458173920228864293993030475885461755767069329678218760943185942331149777258713727459739405
+
+# e=pow(2,3)*25
+e1=25
+n=p*q
+d =gmpy2.invert(e1,(p-1)*(q-1))
+flag8 = pow(c,d,n)
+print hex(gmpy2.iroot(flag8,(e/e1))[0])[2:].decode(&#39;hex&#39;)
+</code></pre>
+<h1 id="over"><a href="#over" class="headerlink" title="over"></a>over</h1><p>if something new,I’ll add it</p>
+<p>tips:install gmpy2 in linux</p>
+<pre><code class="bash">conda install gmpy2 -n &lt;your env &gt;
+</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="../../../../about" rel="external nofollow noreferrer">xyzz</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xyzzpwn.top">http://www.xyzzpwn.top</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="../../../../about" target="_blank">xyzz</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="../../../../tags/RSA/">
+                                    <span class="chip bg-color">RSA</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="../../../../libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="../../../../libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="../../08/ssh-pi-by-python/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/6.jpg" class="responsive-img" alt="ssh pi by python">
+                        
+                        <span class="card-title">ssh pi by python</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            use python to scan raspberry pi
+
+#-*- coding: utf-8 -*-
+#!/usr/bin/python
+import paramiko
+import threading
+
+def ssh2(ip,
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-06-08
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/trick/" class="post-category">
+                                    trick
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/Raspberrypi/">
+                        <span class="chip bg-color">Raspberrypi</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="../../01/rsa-of-ctf-1/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="../../../../medias/featureimages/10.jpg" class="responsive-img" alt="rsa_of_ctf_1">
+                        
+                        <span class="card-title">rsa_of_ctf_1</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            IN CTF,Rsa often appears.BUT in ctf it’s usually with Fixed method to solve it.Today,I put all code to here.
+
+1.have p,q
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-06-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="../../../../categories/crypto/" class="post-category">
+                                    crypto
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="../../../../tags/RSA/">
+                        <span class="chip bg-color">RSA</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="../../../../libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="../../../../libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="../../../../libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('1'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2015</span>
+            <a href="../../../../about" target="_blank">xyzz</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="../../../../js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("../../../../search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="../../../../libs/materialize/materialize.min.js"></script>
+    <script src="../../../../libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="../../../../libs/aos/aos.js"></script>
+    <script src="../../../../libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="../../../../libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="../../../../js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="../../../../libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="../../../../libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="../../../../libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
